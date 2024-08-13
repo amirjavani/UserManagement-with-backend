@@ -8,7 +8,7 @@
 <div id="main-page" class="d-flex flex-column px-2 py-5 p-sm-5">
         <div id="header" class="d-flex flex-row justify-content-between p-2">
             
-            <input id="search-input" type="search"></input>            
+            <input id="search-input" placeholder="جستجو" type="search"></input>            
             
             <div id="add-delete-buttons" class="  d-flex flex-row gap-1">
                 <button id="add-button" class="btn btn-success">افزودن </button>
@@ -120,15 +120,16 @@
                 
 
             </table>
-        
-        
-        <div id="page-buttons" class="d-flex flex-row">
-            <i id="perv" class="bi bi-chevron-right"></i>
-            <div id="pages">1</div>
-            <i id="next" class="bi bi-chevron-left"></i>
+        <div id="page-buttons" class="pt-2 pt-sm-4 d-flex flex-row gap-2">
+            <i id="prev" class="bi bi-chevron-right "></i>
+            <div id="pages" class="d-flex flex-row gap-1"></div>
+            <i id="next" class="bi bi-chevron-left  "></i>
 
         </div>
+        
+        
     </div>
+    
     <div id="download-submit-buttons" class=" text-sm-start  text-center mt-4 ">
         <button class="btn btn-success" onclick="saveData()">ثبت نهایی</button>
         <button class="btn btn-outline-success " onclick="downloadCSVfile()">  <i class="bi bi-download"></i></button>

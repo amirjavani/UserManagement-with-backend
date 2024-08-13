@@ -51,14 +51,43 @@ body {
     margin: 0px;
 }
 
+#page-buttons{
+    font-size:18px;
+}
+
+#pages div {
+    padding: 3px;
+    cursor:pointer;
+}
+
+#prev, #next {
+    cursor: pointer;
+    padding: 3px;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+}
+
+#prev:hover, #next:hover {
+    background: #f2f2f2;
+}
+
+#pages div:hover {
+    border-bottom: 1px solid #aaa;
+}
+
+.active-button {
+    border-bottom: 1.5px solid black;
+}
+
 
 
 .table-container {
-    padding:20px 0px;
+    overflow-x: auto;
+    padding: 20px 0px;
 }
 
 table {
-
+    
     width: 100%;
     border-collapse: collapse;
 }
@@ -168,6 +197,7 @@ th {
 }
 
 #search-input {
+    width:240px;
     border: none;
     outline: none;
     border-bottom: 1px solid #aaa;
@@ -241,6 +271,11 @@ div.dt-container .dt-paging .dt-paging-button:hover{
         
         
     }
+    #search-input {
+        width: 180px;
+        
+        font-size: 13px;
+    }
 
     #add-delete-buttons .btn {
         font-size: 13px;
@@ -281,12 +316,21 @@ div.dt-container .dt-paging .dt-paging-button:hover{
     .modal-footer button{
         font-size:13px;
     }
+
+    #page-buttons {
+        font-size: 16px;
+    }
     
 }
 
 @media (max-width:481px){
 
     #add-delete-buttons {
+        
+    }
+
+    #search-input {
+        width: 140px;
         
     }
 
@@ -314,5 +358,10 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 
     .modal-footer button {
         font-size: 10px;
+    }
+
+    #page-buttons {
+        font-size: 14px;
+        justify-content:center;
     }
 }

@@ -5,8 +5,8 @@
 let deleteList =[]
 let users=[]
 let table = null;
-let currentPage = 1;
-let pageSize = 3
+let currentPage = 2;
+let pageSize = 5
 
 
 
@@ -200,7 +200,7 @@ function fetchData(page) {
         .then(data => {
             console.log(data)
             fillTable(data.data);
-            renderPagination(data.CurrentPage, data.TotalPages);
+            renderPagination(data.currentPage, data.totalPages);
         });
 
 
@@ -226,7 +226,10 @@ function fetchData(page) {
 function fillTable(data) {
     
     var tbody = $('tbody');
+    $('table').hide();
     tbody.empty();
+    
+
 
     data.forEach(item => {
         var row = "<tr>" +
@@ -249,32 +252,48 @@ function fillTable(data) {
 
     $('#spinner').hide();
     $('.table-container').css('visibility', 'visible');
+    $('table').fadeIn();
     $('#three-button button span').hide();
 
 }
 
 function renderPagination(current, totalPages) {
-    const prev = $('#perv');
-    const next = $('#next');
+   
+    $('#prev').toggleClass('text-dark disabled', !(current > 1));
+    $('#next').toggleClass('text-dark disabled', !(current < totalPages));
 
 
-    $('#perv').toggleClass('hidden', current > 1);
-    $('#next').toggleClass('hidden', current < totalPages);
+    $('#pages').empty()
+    for (let i = 1; i <= totalPages; i++) {
+
+        if (i == current) {
+            $('#pages').append('<div class="active-button" onclick="pageButton(' + (i) + ')" >' + (i) + '</div>');
+        } else {
+            $('#pages').append('<div class="" onclick="pageButton(' + (i) + ')" >' + (i) + '</div>');
+        }
+        
+    }
     
-    prev.click(function () {
+    $('#prev').off('click').on('click', function () {
         if (current > 1) {
             currentPage--;
             fetchData(currentPage);
         }
     });
 
-    next.click(function () {
+    $('#next').off('click').on('click', function () {
         if (current < totalPages) {
             currentPage++;
             fetchData(currentPage);
         }
-    })
+    });
 }
+
+function pageButton(i) {
+    currentPage = i;
+    fetchData(currentPage);
+}
+
 
 
 function saveData() {
