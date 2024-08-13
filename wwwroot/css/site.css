@@ -1,0 +1,329 @@
+@font-face {
+    font-family: IranYekanThin;
+    src: url(../Assets/fonts/IRANYekanThin.ttf);
+}
+
+@font-face {
+    font-family: IranYekanBold;
+    src: url(../Assets/fonts/IRANYekanBold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: IranYekanRegular;
+    src: url(../Assets/fonts/IRANYekanRegular.ttf);
+}
+
+@font-face {
+    font-family: IranYekanLight;
+    src: url(../Assets/fonts/IRANYekanLight.ttf);
+}
+
+@font-face {
+    font-family: farsiNum;
+    src: url(../Assets/fonts/IRANYekanRegularFaNum.ttf);
+}
+
+.font-IYnum {
+    font-family: farsiNum;
+}
+
+.font-IYthin {
+    font-family: IranYekanThin;
+}
+
+.font-IYbold {
+    font-family: IranYekanBold;
+}
+
+.font-IYregular {
+    font-family: IranYekanRegular;
+}
+
+.font-IYlight {
+    font-family: IranYekanLight;
+}
+
+
+body {
+    font-family: IranYekanRegular;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+.table-container {
+    overflow-y: auto;
+}
+
+table {
+
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+td {
+    text-align: center !important;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+
+th {
+    text-align: center !important;
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+    z-index: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+
+#search{
+    border:solid 1px gray;
+    border-radius:50px;
+    font-size:15px;
+}
+    #search i {
+
+        font-size: 16px;
+        color:white;
+        border-radius: 50px;
+        padding: 8px 20px;
+        background: #4e99e9;
+    }#search input {
+    border:none;
+    outline:none;
+}
+    #search select {
+        text-align:center;
+        background: #4e99e9;
+        border: none;
+        border-radius: 50px;
+        padding: 8px 10px;
+    }
+
+#modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    padding: 100px 0px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4);  
+}
+#modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 40px;
+    border: 1px solid #888;
+    width: 500px;
+    position:relative;
+}
+
+#close-modal-button {
+    position:absolute;
+    right:10px;
+    top:10px;
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close-modal-button:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#add-form input {
+    font-family: IranYekanRegular;
+    margin: 0px auto;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px;
+}
+
+#add-form input:focus{
+
+    border-bottom:solid 2px
+}
+
+#modal-buttons{
+    margin:20px auto;
+}
+
+#add-delete-buttons {
+    position:absolute;
+    left:50px;
+    top:75px;
+    z-index : 5;
+    
+}
+
+div.dt-container .dt-paging .dt-paging-button{
+    padding:5px 10px;
+}
+
+.search
+{
+    
+    border-bottom: 1px solid #aaa;
+}
+
+.modal-input{
+    width:90%;
+}
+
+#alert{
+    top:5%;
+    right:40%;
+    z-index :4;
+}
+#alert button{
+    border:none;
+    font-size:12px;
+    outline:none;
+}
+
+div.dt-container .dt-paging .dt-paging-button:hover{
+    background: #e7e7e7;
+    border:none;
+}
+
+#spinner {
+    width: 60px;
+    position:absolute;
+    top:25%;
+    right:50%;
+    
+}
+
+
+#three-button button:hover{
+    width:50%;
+}
+
+
+#three-button button {
+    width: 17%;
+    min-width:30px;
+    transition: width .8s ease;
+    border:none;
+    padding:2px 3px;
+    border-radius:3px;
+    
+}
+
+#single-delete-button {
+    background: #dc3545;
+}
+#edit-button {
+    background: #c3c3c3;
+}
+
+#last-col{
+    min-width:160px;
+    width:18%;
+}
+
+
+@media (max-width:1024px) {
+    #add-delete-buttons {
+        position: absolute;
+        left: 50px;
+        top: 75px;
+        z-index: 5;
+        
+    }
+
+        #add-delete-buttons .btn {
+            font-size: 13px;
+        }
+
+    table {
+        font-size:13px;
+    }
+
+    .dt-layout-row {
+        font-size: 13px;
+    }
+
+    #add-delete-buttons .btn {
+        font-size: 13px;
+    }
+
+    #download-submit-buttons .btn{
+        font-size:13px;
+    }
+
+
+    .modal-input {
+        width: 90%;
+    }
+    #modal-content {
+        
+        width: 400px;
+        
+    }
+    
+    #alert, .btn-close {
+        font-size: 13px;
+        top: 2%;
+        right: 35%;
+        z-index: 10;
+    }
+
+    .modal-body{
+        font-size:13px;
+    }
+    .modal-footer button{
+        font-size:13px;
+    }
+    
+}
+
+@media (max-width:481px){
+
+    #add-delete-buttons {
+        position: absolute;
+        left: 50px;
+        top: 30px;
+       
+    }
+
+
+    table {
+        font-size:10px;
+    }
+    .modal-input {
+        width: 90%;
+    }
+
+    #modal-content {
+        width: 90%;
+    }
+    #alert ,.btn-close  {
+        font-size:10px;
+        top: 2%;
+        right: 10%;
+        
+    }
+
+    .modal-body {
+        font-size: 10px;
+    }
+
+    .modal-footer button {
+        font-size: 10px;
+    }
+}
