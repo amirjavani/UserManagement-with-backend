@@ -10,7 +10,7 @@ let pageSize = 5
 
 
 
-function edit(ID) {
+function edit(button,ID) {
     console.log('edit' + ID);
        
     $('.modal-error').hide();
@@ -19,18 +19,20 @@ function edit(ID) {
     $('#modal').fadeIn();
 
 
-
+    var firstName = $(button).closest('tr').find('td').eq(1).text();
+    var lastName = $(button).closest('tr').find('td').eq(2).text();
+    var phone = $(button).closest('tr').find('td').eq(3).text();
+    var state = $(button).closest('tr').find('td').eq(4).text();
+    var city = $(button).closest('tr').find('td').eq(5).text();
     
-    users.forEach(function (user) {
-        if (ID === parseInt(user.id)) {
-            $('#firstName-input').val(user.firstName);
-            $('#lastName-input').val(user.lastName);
-            $('#phone-input').val(user.phone);
-            $('#city-input').val(user.city);
-            $('#state-input').val(user.state);
-            $('#id-input').val(user.id);
-        }
-    })
+    
+    $('#firstName-input').val(firstName);
+    $('#lastName-input').val(lastName);
+    $('#phone-input').val(phone);
+    $('#city-input').val(city);
+    $('#state-input').val(state);
+    $('#id-input').val(id);
+    
 
     $('#modal-submit-button').off('click').click(function () {
         console.log('edit')
@@ -134,19 +136,21 @@ function edit(ID) {
 
 
 }
-function show(id) {
-    console.log('show' + id)
+function show(button,id) {
 
-    users.forEach(function (user) {
-        if (id === parseInt(user.id)) {
-            $('#info-form').children('p').eq(0).text(user.firstName)
-            $('#info-form').children('p').eq(1).text(user.lastName)
-            $('#info-form').children('p').eq(2).text(user.phone)
-            $('#info-form').children('p').eq(3).html(user.state+'<span></span>')
-            $('#info-form p  span').text('، ' + user.city)
-            $('#info-form').children('p').eq(4).text(user.id)
-        }
-    })
+    var firstName = $(button).closest('tr').find('td').eq(1).text();
+    var lastName = $(button).closest('tr').find('td').eq(2).text();
+    var phone = $(button).closest('tr').find('td').eq(3).text();
+    var state = $(button).closest('tr').find('td').eq(4).text();
+    var city = $(button).closest('tr').find('td').eq(5).text();
+
+    $('#info-form').children('p').eq(0).text(firstName)
+    $('#info-form').children('p').eq(1).text(lastName)
+    $('#info-form').children('p').eq(2).text(phone)
+    $('#info-form').children('p').eq(3).html(state+'<span></span>')
+    $('#info-form p  span').text('، ' + city)
+    $('#info-form').children('p').eq(4).text(id)
+
 }
 function singleDelete(id) {
     $('#delete-modal-id').text(id);
@@ -203,24 +207,6 @@ function fetchData(page) {
             renderPagination(data.currentPage, data.totalPages);
         });
 
-
-    //fetch('/Home/fetch')
-    //    .then(response => {
-    //        if (!response.ok) {
-    //            throw new Error('Network response was not ok ' + response.statusText);
-    //        }
-    //        return response.json();
-    //    })
-    //    .then(data => {
-    //        console.log(data)
-    //        users = data;
-    //        fillTable(data);
-            
-    //    })
-    //    .catch(error => {
-    //        console.error('There was a problem with the fetch operation:', error);
-    //    });
-
 }
 
 function fillTable(data) {
@@ -243,7 +229,7 @@ function fillTable(data) {
                 '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">'+
                       '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(' + item.id +')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>'+
                       '<button  id="edit-button" onclick=\"edit(' + item.id +')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>'+
-                      '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick=\"show(' + item.id +')\"><i class=\"three-button bi bi-card-text\"></i><span class="">نمایش</span></button>'+
+                      '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick=\"show(this,' + item.id +')\"><i class=\"three-button bi bi-card-text\"></i><span class="">نمایش</span></button>'+
                 '</div>' +
             '</td>'+
             "</tr> ";
@@ -297,8 +283,7 @@ function pageButton(i) {
 
 
 function saveData() {
-    
-    
+
     fetch('/home/save', {
         method: 'POST',
         headers: {
@@ -460,10 +445,8 @@ $(document).ready(function () {
                 $('.modal-error').eq(5).show();
                 ID = true;
                 
-            }  if (users.some(u => u.id === id)) {
-                
             }
-
+                    
             if (FN || LN || PH || ST || CT || ID) {
                 return null;
             }
@@ -522,9 +505,11 @@ $(document).ready(function () {
             closeModal()
         }
     });
+
+
     $(window).click(function (event) {
         if (!$(event.target).is($('#alert'))) {
-            $('#alert').fadeOut()
+            $('#alert').hide()
         }
     });
     
