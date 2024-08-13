@@ -5,8 +5,8 @@
 let deleteList =[]
 let users=[]
 let table = null;
-let currentPage = 2;
-let pageSize = 5
+let currentPage = 1;
+let pageSize = 7
 
 
 
@@ -163,12 +163,21 @@ function singleDelete(id) {
     $('#delete-modal-id').text(id);
     $('#delete-modal-submit').off('click').on('click', function () {
         
-        users = users.filter(function (user) {
-            if ( !(id===parseInt(user.id)) ) {
-                return user;
-            }
-        });
-        rewriteTable();
+        fetch('/home/remove/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+        })
+            .then(response => {
+                if (response.status === 409) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                fetchData(currentPage);
+                closeModal();
+                return response.json();
+            });
     });
 
 }

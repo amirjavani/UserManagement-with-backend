@@ -94,6 +94,8 @@ namespace UserManagement.Controllers
         }
 
 
+
+
         [HttpPost("home/edit/{id}")]
         public IActionResult EditUser([FromBody] User user , [FromRoute] string id)
         {
@@ -136,6 +138,28 @@ namespace UserManagement.Controllers
             WriteUsersToFile(users);
 
             return Ok(new { Message = true, User = user });
+        }
+        
+        
+        [HttpPost("home/remove/{id}")]
+        public IActionResult DeleteUser([FromRoute] string id)
+        {
+
+            var users = ReadUsersFromFile();
+            User existingUser = users.FirstOrDefault(u => u.ID == id);
+            
+
+            
+            if (existingUser != null)
+            {
+                users.Remove(existingUser);
+
+                WriteUsersToFile(users);
+
+                return Ok();
+            }
+            return Error();
+
         }
 
         [HttpPost("home/save")]
