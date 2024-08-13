@@ -5,6 +5,9 @@
 let deleteList =[]
 let users=[]
 let table = null;
+let currentPage = 1;
+let pageSize = 3
+
 
 
 function edit(ID) {
@@ -192,10 +195,11 @@ function downloadCSVfile() {
 function fetchData(page) {
 
 
-    fetch(`/api/Items?page=${page}&pageSize=${3}`)
+    fetch(`/Home/fetch?page=${page}&pageSize=${pageSize}`)
         .then(response => response.json())
         .then(data => {
-            fillTable(data.Data
+            console.log(data)
+            fillTable(data.data);
             renderPagination(data.CurrentPage, data.TotalPages);
         });
 
@@ -243,7 +247,35 @@ function fillTable(data) {
         tbody.append(row);
     });
 
+    $('#spinner').hide();
+    $('.table-container').css('visibility', 'visible');
+    $('#three-button button span').hide();
+
 }
+
+function renderPagination(current, totalPages) {
+    const prev = $('#perv');
+    const next = $('#next');
+
+
+    $('#perv').toggleClass('hidden', current > 1);
+    $('#next').toggleClass('hidden', current < totalPages);
+    
+    prev.click(function () {
+        if (current > 1) {
+            currentPage--;
+            fetchData(currentPage);
+        }
+    });
+
+    next.click(function () {
+        if (current < totalPages) {
+            currentPage++;
+            fetchData(currentPage);
+        }
+    })
+}
+
 
 function saveData() {
     
@@ -310,8 +342,8 @@ function rewriteTable() {
 
 
 $(document).ready(function () {
-    
-    fetchData();
+
+    fetchData(currentPage);
 
     
     $('table').on('mouseenter', '#three-button button', function () {
@@ -468,13 +500,4 @@ $(document).ready(function () {
     });
     
 
-    
-
-    
-
-    
-
-
-
-   
 })

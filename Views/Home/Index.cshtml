@@ -8,12 +8,13 @@
 <div id="main-page" class="d-flex flex-column px-2 py-5 p-sm-5">
         <div id="header" class="d-flex flex-row justify-content-between p-2">
             
+            <input id="search-input" type="search"></input>            
+            
             <div id="add-delete-buttons" class="  d-flex flex-row gap-1">
                 <button id="add-button" class="btn btn-success">افزودن </button>
                 <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
             </div>
-            
-             
+ 
         </div>
     <!-- Add Modal -->
     <div id="modal" class="">
@@ -121,7 +122,12 @@
             </table>
         
         
-        
+        <div id="page-buttons" class="d-flex flex-row">
+            <i id="perv" class="bi bi-chevron-right"></i>
+            <div id="pages">1</div>
+            <i id="next" class="bi bi-chevron-left"></i>
+
+        </div>
     </div>
     <div id="download-submit-buttons" class=" text-sm-start  text-center mt-4 ">
         <button class="btn btn-success" onclick="saveData()">ثبت نهایی</button>
