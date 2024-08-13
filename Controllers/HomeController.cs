@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections;
 
 
 
@@ -86,6 +87,51 @@ namespace UserManagement.Controllers
 
             // Add the new user
             users.Add(user);
+
+            WriteUsersToFile(users);
+
+            return Ok(new { Message = true, User = user });
+        }
+
+
+        [HttpPost("home/edit/{id}")]
+        public IActionResult EditUser([FromBody] User user , [FromRoute] string id)
+        {
+
+            if (user == null)
+            {
+                return BadRequest("Invalid user data.");
+            }
+            var users = ReadUsersFromFile();
+            User existingUser = users.FirstOrDefault(u => u.ID == user.ID);
+            
+
+            if (user.ID != id)
+            { 
+                if (existingUser != null)
+                {
+                    return Conflict(new { Message = false });
+                }
+
+            }
+
+
+
+            foreach (User obj in users)
+            {
+                if (obj.ID == id)
+                {
+                    obj.ID = user.ID;
+                    obj.FirstName = user.FirstName;
+                    obj.LastName = user.LastName;
+                    obj.Phone = user.Phone;
+                    obj.State = user.State;
+                    obj.City = user.City;
+                    break;
+                }
+            }
+
+            Console.WriteLine(users);
 
             WriteUsersToFile(users);
 

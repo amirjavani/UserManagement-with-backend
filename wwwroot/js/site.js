@@ -11,7 +11,7 @@ let pageSize = 5
 
 
 function edit(button,ID) {
-    console.log('edit' + ID);
+    
        
     $('.modal-error').hide();
     $('#modal h3').text('ویرایش');
@@ -31,11 +31,11 @@ function edit(button,ID) {
     $('#phone-input').val(phone);
     $('#city-input').val(city);
     $('#state-input').val(state);
-    $('#id-input').val(id);
+    $('#id-input').val(ID);
     
 
     $('#modal-submit-button').off('click').click(function () {
-        console.log('edit')
+        
         $('.modal-error').hide()
         let firstName = $('#firstName-input').val();
         let lastName = $('#lastName-input').val();
@@ -103,33 +103,40 @@ function edit(button,ID) {
             return null;
         }
 
+        user = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "phone": phone,
+            "city": city,
+            "state": state,
+            "id": id
+        };
+        
 
+        fetch('/home/edit/'+ID, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(response => {
+                if (response.status === 409) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                
+                fetchData(currentPage);
+                closeModal();
+                
 
-
-        //else if (users.some(u => u.id === id && parseInt(u.id) !== ID)) {
-        //    $('.modal-error').text('کد پرسنلی تکراری است!!')
-        //    $('.modal-error').show();
-        //    return null;
-        //}
-
-        // Find the index of the object
-        let index = users.findIndex(obj => parseInt(obj.id) === ID);
-
-        // Modify the object if it exists
-        if (index !== -1) {
-            users[index] = {
-                "firstName": firstName,
-                "lastName": lastName,
-                "phone": phone,
-                "city": city,
-                "state": state,
-                "id": id
-            };
-        }
-        rewriteTable();
-
-        closeModal();
-
+            })
+            .catch((error) => {
+                $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
+                $('.modal-error').eq(5).show();  // Show the error message
+            });
 
 
     })
@@ -228,7 +235,7 @@ function fillTable(data) {
             '<td>' +
                 '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">'+
                       '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(' + item.id +')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>'+
-                      '<button  id="edit-button" onclick=\"edit(' + item.id +')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>'+
+                      '<button  id="edit-button" onclick=\"edit(this,' + item.id +')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>'+
                       '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick=\"show(this,' + item.id +')\"><i class=\"three-button bi bi-card-text\"></i><span class="">نمایش</span></button>'+
                 '</div>' +
             '</td>'+
