@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Collections;
+using String = System.String;
 
 
 
@@ -158,9 +159,30 @@ namespace UserManagement.Controllers
 
                 return Ok();
             }
+
             return Error();
 
         }
+
+
+        [HttpPost("home/removeList")]
+        public IActionResult DeleteUsers([FromBody] List<int> numbers)
+        {
+
+            var users = ReadUsersFromFile();
+
+            // Filter out the users that need to be removed
+            var usersToRemove = users.Where(u => numbers.Contains(int.Parse(u.ID))).ToList();
+
+            foreach (var user in usersToRemove)
+            {
+                users.Remove(user);
+            }
+
+            WriteUsersToFile(users);
+            return Ok();
+        }
+
 
         [HttpPost("home/save")]
         public IActionResult SaveData([FromBody] List<User> data)
@@ -171,6 +193,14 @@ namespace UserManagement.Controllers
 
             return Ok();
         }
+        
+        [HttpPost("home/download")]
+        public IActionResult download()
+        {
+            var users = ReadUsersFromFile();
+            return Ok(new { Data = users});
+        }
+
 
 
 

@@ -184,32 +184,62 @@ function singleDelete(id) {
 
 function downloadCSVfile() {
 
-    if (users.length == 0) {
-        console.log('empty table')
-        return null;
-    }
-    let csv = '';
 
-    csv += '\uFEFF';
+    fetch('/home/download', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())  // Use .json() to parse the response
+        .then(data => {
+            // Extract users from the response data
+            let users = data.data;
 
-    const headers = Object.keys(users[0]);
-    csv += headers.join(',') + '\n';
+            if (users.length === 0) {
+                console.log('empty table');
+                return null;
+            }
 
-    users.forEach(obj => {
-        const values = headers.map(header => obj[header]);
-        csv += values.join(',') + '\n';
-    });
+            let csv = '';
+            csv += '\uFEFF';  // Add BOM for UTF-8
 
-    console.log(csv);
-    const blob = new Blob([new TextEncoder('utf-16le').encode(csv)], { type: 'text/csv;charset=utf-16le;' });
-    const url = window.URL.createObjectURL(blob);
-    const a = $('<a></a>').attr('href', url).attr('download', 'data.csv');
+            // Extract headers from the first object
+            const headers = Object.keys(users[0]);
+            csv += headers.join(',') + '\n';
 
-    $('body').append(a);
-    a[0].click();
-    a.remove(); 
+            // Convert each object to a CSV row
+            users.forEach(obj => {
+                const values = headers.map(header => {
+                    // Handle commas and new lines within values
+                    const value = obj[header] || '';
+                    return `"${value.toString().replace(/"/g, '""')}"`;
+                });
+                csv += values.join(',') + '\n';
+            });
 
-    window.URL.revokeObjectURL(url); 
+            // Create a Blob from the CSV string
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+
+            // Create a link element and trigger download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.csv';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            // Revoke the object URL to free up memory
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+
+
+    
 }
 
 function fetchData(page) {
@@ -226,7 +256,7 @@ function fetchData(page) {
 }
 
 function fillTable(data) {
-    
+    deleteList = []
     var tbody = $('tbody');
     $('table').hide();
     tbody.empty();
@@ -386,13 +416,21 @@ $(document).ready(function () {
 
     $('#delete-button').click(function () {
 
-        users = users.filter(function (user) {
-            if (!deleteList.includes(parseInt(user.id))) {
-                return user;
-            }
-        });
+        fetch('/home/removeList', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(deleteList)
 
-        rewriteTable();
+        })
+            .then(response => {
+                if (response.status === 409) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                fetchData(currentPage);
+                
+            });
        
        deleteList = []
     });
