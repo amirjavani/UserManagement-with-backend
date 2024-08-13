@@ -5,6 +5,7 @@ using UserManagement.Models;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 
@@ -15,31 +16,46 @@ namespace UserManagement.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
+        
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment hostingEnvironment)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
         }
 
+        private List<User> ReadUsersFromFile()
+        {
+            
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "data.json");
+            if (!System.IO.File.Exists(filePath))
+            {
+                return new List<User>();
+            }
+            var jsonData = System.IO.File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<List<User>>(jsonData);
+        }
+
+        private void WriteUsersToFile(List<User> users)
+        {
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "data.json");
+            var jsonData = JsonConvert.SerializeObject(users, Formatting.Indented);
+            System.IO.File.WriteAllText(filePath, jsonData);
+        }
+
+
+
 
         [HttpGet("home/fetch")]
         public IActionResult GetItems(int page , int pageSize )
         {
-            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "data.json");
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound("Data file not found");
-            }
-            var jsonData = System.IO.File.ReadAllText(filePath);
-            var data = JsonConvert.DeserializeObject<List<User>>(jsonData);
 
-            var paginatedItems = data
+            var users = ReadUsersFromFile();
+            var paginatedItems = users
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
 
-            var totalItems = data.Count;
+            var totalItems = users.Count;
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             return Ok(new
@@ -50,6 +66,30 @@ namespace UserManagement.Controllers
                 PageSize = pageSize
             });
 
+        }
+        
+        
+        [HttpPost("home/add")]
+        public IActionResult PostUser([FromBody] User user)
+        {
+
+            if (user == null)
+            {
+                return BadRequest("Invalid user data.");
+            }
+            var users = ReadUsersFromFile();
+            var existingUser = users.FirstOrDefault(u => u.ID == user.ID);
+            if (existingUser != null)
+            {
+                return Conflict(new { Message = false });
+            }
+
+            // Add the new user
+            users.Add(user);
+
+            WriteUsersToFile(users);
+
+            return Ok(new { Message = true, User = user });
         }
 
         [HttpPost("home/save")]

@@ -461,40 +461,50 @@ $(document).ready(function () {
                 ID = true;
                 
             }  if (users.some(u => u.id === id)) {
-                $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
-                $('.modal-error').eq(5).show();
-                ID = true
+                
             }
 
             if (FN || LN || PH || ST || CT || ID) {
                 return null;
             }
 
-            users.push({
+            const user = {
                 "firstName": firstName,
                 "lastName": lastName,
                 "phone": phone,
                 "city": city,
                 "state": state,
                 "id": id
-            })
-            table.row.add([
-                ' <input type=\"checkbox\" value=\"' + id + '\" class=\"check-box\" onchange=\"handleCheckboxChange(this,' + id + ')\"></input >',
-                firstName,
-                lastName,
-                phone,
-                city,
-                state,
-                '<td>' +
-                '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
-                '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(' + id + ')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>' +
-                '<button id="edit-button" onclick=\"edit(' + id + ')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>' +
-                '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick=\"show(' + id + ')\"><i class=\"three-button bi bi-card-text\"></i><span class="">نمایش</span></button>' +
-                '</div>' +
-                '</td>',
-            ]).draw();
+            }
 
-            closeModal();
+            fetch('/home/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => {
+                    if (response.status === 409) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.message) {
+                        fetchData(currentPage);
+                        closeModal();
+
+                    } 
+                      
+                })
+                .catch((error) => {
+                    $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
+                    $('.modal-error').eq(5).show();  // Show the error message
+                });
+            
+
+            
 
         });
 
