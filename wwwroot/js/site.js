@@ -442,23 +442,36 @@ $(document).ready(function () {
 
     $('#delete-button').click(function () {
 
-        fetch('/home/removeList', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(deleteList)
 
-        })
-            .then(response => {
-                if (response.status === 409) {
-                    return response.text().then(text => { throw new Error(text); });
-                }
-                fetchData(currentPage);
-                
-            });
-       
-       deleteList = []
+        $('#group-delete-modal').modal('show');
+        $('#group-delete-modal-id').html(
+            deleteList.map(e => '<span> ' + e + '</span>').join('،')
+        );
+        $('#group-delete-modal-submit').off('click').click(function () {
+
+            
+            fetch('/home/removeList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(deleteList)
+
+            })
+                .then(response => {
+                    if (response.status === 409) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    fetchData(currentPage);
+
+                });
+
+            deleteList = []
+
+        });
+
+
+        
     });
 
     $('#modal').hide();

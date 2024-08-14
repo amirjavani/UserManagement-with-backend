@@ -71,11 +71,29 @@
                     <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
               </div>
               <div class="modal-body">
-                آیا از حدف کاربر با کد پرسنلی <strong id="delete-modal-id"></strong> مطمعن هستید؟؟
+                آیا از حذف کاربر با کد پرسنلی <strong id="delete-modal-id"></strong> مطمعن هستید؟؟
               </div>
               <div class="modal-footer">
                 <button  type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>
                     <button id="delete-modal-submit" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">بله</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group Delete Modal -->
+        <div class="modal fade" id="group-delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
+              </div>
+              <div class="modal-body">
+                آیا از حذف کاربران با کد پرسنلی <strong id="group-delete-modal-id"></strong> مطمعن هستید؟؟
+              </div>
+              <div class="modal-footer">
+                <button  type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>
+                    <button id="group-delete-modal-submit" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">بله</button>
               </div>
             </div>
           </div>
@@ -151,7 +169,6 @@
     </div>
     
     <div id="download-submit-buttons" class=" text-sm-start  text-center mt-4 ">
-        <button class="btn btn-success" onclick="saveData()">ثبت نهایی</button>
-        <button class="btn btn-outline-success " onclick="downloadCSVfile()">  <i class="bi bi-download"></i></button>
+        <button class="btn btn-outline-success " onclick="downloadCSVfile()"> دانلود  <i class="bi bi-download"></i></button>
     </div>
 </div>
