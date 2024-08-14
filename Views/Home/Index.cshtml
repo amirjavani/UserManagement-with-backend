@@ -5,12 +5,14 @@
 }
 
 
+
 <div id="main-page" class="d-flex flex-column px-2 py-5 p-sm-5">
         <div id="header" class="d-flex flex-row justify-content-between p-2">
             
             <input id="search-input" placeholder="جستجو" type="search"></input>            
             
             <div id="add-delete-buttons" class="  d-flex flex-row gap-1">
+                <button id="Groups-page-button" class="btn btn-secondary">گروه ها </button>
                 <button id="add-button" class="btn btn-success">افزودن </button>
                 <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
             </div>
@@ -34,9 +36,14 @@
                     <p class="modal-error text-danger fs-6 text-center">error</p>
                     <input id="id-input" class="modal-input " type="text" placeholder="شماره پرسنلی" value="" />
                     <p class="modal-error text-danger fs-6 text-center">error</p>
+                    <select id="group-select" class=" mx-auto">
+                        <option value="">گروه</option>
+                        <option value=""></option>
+                    </select>
+                    
                     <div id="modal-buttons" class="d-flex flex-row gap-1 modal-input">
                         <button id="add-submit-button" type="button" class="btn btn-success w-100">ثبت</button>
-                    <button id="edit-submit-button" data-bs-target="#edit-submit-modal" type="button" class="btn btn-success w-100">ثبت</button>
+                        <button id="edit-submit-button" data-bs-target="#edit-submit-modal" type="button" class="btn btn-success w-100">ثبت</button>
                         <button onclick="closeModal()" type="button" class="btn btn-danger">لغو</button>
                     </div>
                     
@@ -150,6 +157,7 @@
                         <th>شماره تلفن</th>
                         <th>استان</th>
                         <th>شهر</th>
+                        <th>گروه</th>
                         <th id="last-col" data-dt-order="disable"></th>
                     </tr>
                 </thead>

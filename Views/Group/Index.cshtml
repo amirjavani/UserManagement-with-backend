@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    //@model IEnumerable<UserManagement.Controllers.User>
+
+}
+
+
+<div id="main-page" class="d-flex flex-column px-2 py-5 p-sm-5">
+    <div id="header" class="d-flex flex-row justify-content-between p-2">
+
+        <input id="search-input" placeholder="جستجو" type="search"></input>
+
+        <div id="add-delete-buttons" class="  d-flex flex-row gap-1">
+            <button id="add-button" class="btn btn-success">افزودن </button>
+            <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
+        </div>
+
+    </div>
+    <!-- Add Modal -->
+    
+
+
+
+
+    <img id="spinner" src="~/spinner.svg" alt="spinner" />
+    
+    <div id="group-table" class="table-container font-IYregular " style="visibility:hidden;">
+        <table>
+            <thead class="font-IYbold">
+                <tr>
+                    <th data-dt-order="disable"></th>
+                    <th>نام گروه</th>
+                    <th>توضیحات</th>
+                    <th>تاریخ ایجاد</th>
+                </tr>
+            </thead>
+            <tbody class="font-IYnum">
+            </tbody>
+
+
+        </table>
+        <div id="page-buttons" class="pt-2 pt-sm-4 d-flex flex-row gap-2">
+            <i id="prev" class="bi bi-chevron-right "></i>
+            <div id="pages" class="d-flex flex-row gap-1"></div>
+            <i id="next" class="bi bi-chevron-left  "></i>
+        </div>
+
+
+    </div>
+
+</div>
+

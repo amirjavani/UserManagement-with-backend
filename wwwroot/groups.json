@@ -1,0 +1,10 @@
+[{
+  "groupName": "بدون بیمه",
+  "groupDiscription": "این گروه بیمه شامل آنها نمیشود",
+  "createdDate": "date"
+ },{
+  "groupName": "با بیمه",
+  "groupDiscription": "این گروه بیمه شامل آنها نمیشود",
+  "createdDate": "date"
+ }
+]

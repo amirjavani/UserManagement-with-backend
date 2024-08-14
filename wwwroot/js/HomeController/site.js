@@ -8,7 +8,7 @@ let table = null;
 let currentPage = 1;
 let pageSize = 7
 let whileSreach = false;
-
+let groups = [];
 
 
 function edit(button,ID) {
@@ -27,6 +27,7 @@ function edit(button,ID) {
     var phone = $(button).closest('tr').find('td').eq(3).text();
     var state = $(button).closest('tr').find('td').eq(4).text();
     var city = $(button).closest('tr').find('td').eq(5).text();
+    var group = $(button).closest('tr').find('td').eq(6).text();
     
     
     $('#firstName-input').val(firstName);
@@ -34,6 +35,7 @@ function edit(button,ID) {
     $('#phone-input').val(phone);
     $('#city-input').val(city);
     $('#state-input').val(state);
+    $('#group-select').val(group);
     $('#id-input').val(ID);
     
 
@@ -45,6 +47,7 @@ function edit(button,ID) {
         let phone = $('#phone-input').val();
         let city = $('#city-input').val();
         let state = $('#state-input').val();
+        let group = $('#group-select').val();
         let id = $('#id-input').val();
 
 
@@ -113,6 +116,7 @@ function edit(button,ID) {
                 "phone": phone,
                 "city": city,
                 "state": state,
+                "group":group,
                 "id": id
             };
 
@@ -293,6 +297,7 @@ function fillTable(data) {
             '<td>' + item.phone + "</td>" +
             '<td>' + item.city + "</td>" +
             '<td>' + item.state + "</td>" +
+            '<td>' + item.group + "</td>" +
             '<td>' +
                 '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">'+
                       '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(' + item.id +')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>'+
@@ -367,38 +372,24 @@ function handleCheckboxChange(checkbox, id) {
 function closeModal() {
     $('#modal').fadeOut()
 }
-function rewriteTable() {
-    table.clear()
-
-    if (users) {
-        users.forEach(function (user) {
-            table.row.add([
-                ' <input type=\"checkbox\" value=\"' + user.id + '\" class=\"check-box\" onchange=\"handleCheckboxChange(this,' + user.id + ')\"></input >',
-                user.firstName,
-                user.lastName,
-                user.phone,
-                user.city,
-                user.state,
-                '<td>' +
-                '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
-                '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(' + user.id + ')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>' +
-                '<button  id="edit-button" onclick=\"edit(' + user.id + ')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>' +
-                '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick=\"show(' + user.id + ')\"><i class=\"three-button bi bi-card-text\"></i><span class="">نمایش</span></button>' +
-                '</div>' +
-                '</td>'
-            ])
-        })
 
 
-    }
-    table.draw();
+
+function getGroups() {
+    
+    fetch(`/groups`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            groups = data.data;                ;
+        });
+    
 }
-
 
 $(document).ready(function () {
 
     fetchData(currentPage);
-
+    getGroups();
     
     $('table').on('mouseenter', '#three-button button', function () {
         $(this).find('i').stop(true, true).hide();
@@ -481,7 +472,14 @@ $(document).ready(function () {
         $('#add-submit-button').show();
         $('#edit-submit-button').hide();
         $('form')[0].reset();
-        $('#modal').fadeIn()
+        
+        $('#group-select').html('<option value="">گروه</option>')
+        
+        groups.map(g => {
+            $('#group-select').append('<option value="' + g.groupName +'">'+g.groupName +'</option>')
+        })
+        $('#modal').fadeIn();
+
 
         $('#add-submit-button').off('click').click(function () {
             $('.modal-error').hide()
@@ -490,6 +488,7 @@ $(document).ready(function () {
             let phone = $('#phone-input').val();
             let city = $('#city-input').val();
             let state = $('#state-input').val();
+            let group = $('#group-select').val();
             let id = $('#id-input').val();
 
             var idRegex = /^[1-9][0-9]{5}$/
@@ -552,6 +551,7 @@ $(document).ready(function () {
                 "phone": phone,
                 "city": city,
                 "state": state,
+                "group": group,
                 "id": id
             }
 
@@ -607,6 +607,10 @@ $(document).ready(function () {
             $('#alert').hide()
         }
     });
+
+    $('#Groups-page-button').click(function () {
+        window.location.href = "/group"
+    })
     
 
 })

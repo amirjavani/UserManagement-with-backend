@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Assets\" />
+    <Folder Include="wwwroot\css\Assets\" />
+    <Folder Include="wwwroot\css\GroupController\" />
+    <Folder Include="wwwroot\js\GroupController\" />
   </ItemGroup>
 
 </Project>

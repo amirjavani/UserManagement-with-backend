@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: IranYekanRegular;
-    src: url(../Assets/fonts/IRANYekanRegular.ttf);
+    src: url(../Assets/fonts//IRANYekanRegular.ttf);
 }
 
 @font-face {
@@ -268,6 +268,11 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 #last-col{
     min-width:160px;
     width:18%;
+}
+
+
+#group-select{
+    width:50%;
 }
 
 

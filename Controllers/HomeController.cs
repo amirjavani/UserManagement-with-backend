@@ -27,7 +27,6 @@ namespace UserManagement.Controllers
 
         private List<User> ReadUsersFromFile()
         {
-            
             var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "data.json");
             if (!System.IO.File.Exists(filePath))
             {
@@ -81,7 +80,7 @@ namespace UserManagement.Controllers
             
             
             totalUsers.ForEach(e => {
-                if(e.FirstName.StartsWith(input) || e.LastName.StartsWith(input)|| e.Phone.StartsWith(input)|| e.State.StartsWith(input)|| e.City.StartsWith(input)) 
+                if(e.FirstName.StartsWith(input) || e.LastName.StartsWith(input)|| e.Phone.StartsWith(input)|| e.State.StartsWith(input)|| e.City.StartsWith(input)|| e.Group.StartsWith(input)) 
                 { users.Add(e); } 
             });
             
@@ -163,6 +162,7 @@ namespace UserManagement.Controllers
                     obj.LastName = user.LastName;
                     obj.Phone = user.Phone;
                     obj.State = user.State;
+                    obj.Group = user.Group;
                     obj.City = user.City;
                     break;
                 }
@@ -257,6 +257,7 @@ namespace UserManagement.Controllers
         public string Phone { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public string Group { get; set; }
         public string ID { get; set; }
     }
 }
