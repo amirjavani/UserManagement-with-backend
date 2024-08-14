@@ -52,15 +52,18 @@ body {
 }
 
 #page-buttons{
+    color:#aaa;
     font-size:18px;
 }
 
 #pages div {
+    font-family: farsiNum;
     padding: 3px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #prev, #next {
+
     cursor: pointer;
     padding: 3px;
     border: 1px solid #f2f2f2;
@@ -72,10 +75,12 @@ body {
 }
 
 #pages div:hover {
+    color: black;
     border-bottom: 1px solid #aaa;
 }
 
 .active-button {
+    color:black;
     border-bottom: 1.5px solid black;
 }
 

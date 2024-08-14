@@ -7,6 +7,7 @@ let users=[]
 let table = null;
 let currentPage = 1;
 let pageSize = 7
+let whileSreach = false;
 
 
 
@@ -135,7 +136,7 @@ function edit(button,ID) {
             })
             .catch((error) => {
                 $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
-                $('.modal-error').eq(5).show();  // Show the error message
+                $('.modal-error').eq(5).show();  
             });
 
 
@@ -191,9 +192,9 @@ function downloadCSVfile() {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())  // Use .json() to parse the response
+        .then(response => response.json())  
         .then(data => {
-            // Extract users from the response data
+
             let users = data.data;
 
             if (users.length === 0) {
@@ -202,27 +203,27 @@ function downloadCSVfile() {
             }
 
             let csv = '';
-            csv += '\uFEFF';  // Add BOM for UTF-8
+            csv += '\uFEFF';  
 
-            // Extract headers from the first object
+            
             const headers = Object.keys(users[0]);
             csv += headers.join(',') + '\n';
 
-            // Convert each object to a CSV row
+            
             users.forEach(obj => {
                 const values = headers.map(header => {
-                    // Handle commas and new lines within values
+                    
                     const value = obj[header] || '';
                     return `"${value.toString().replace(/"/g, '""')}"`;
                 });
                 csv += values.join(',') + '\n';
             });
 
-            // Create a Blob from the CSV string
+           
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = window.URL.createObjectURL(blob);
 
-            // Create a link element and trigger download
+            
             const a = document.createElement('a');
             a.href = url;
             a.download = 'data.csv';
@@ -230,7 +231,7 @@ function downloadCSVfile() {
             a.click();
             a.remove();
 
-            // Revoke the object URL to free up memory
+            
             window.URL.revokeObjectURL(url);
         })
         .catch(error => {
@@ -245,13 +246,20 @@ function downloadCSVfile() {
 function fetchData(page) {
 
 
-    fetch(`/Home/fetch?page=${page}&pageSize=${pageSize}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            fillTable(data.data);
-            renderPagination(data.currentPage, data.totalPages);
-        });
+    if (whileSreach) {
+
+    } else {
+        fetch(`/Home/fetch?page=${page}&pageSize=${pageSize}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                fillTable(data.data);
+                renderPagination(data.currentPage, data.totalPages);
+            });
+    }
+
+
+    
 
 }
 
@@ -291,8 +299,8 @@ function fillTable(data) {
 
 function renderPagination(current, totalPages) {
    
-    $('#prev').toggleClass('text-dark disabled', !(current > 1));
-    $('#next').toggleClass('text-dark disabled', !(current < totalPages));
+    $('#prev').toggleClass('text-dark disabled font-IYbold', (current > 1));
+    $('#next').toggleClass('text-dark disabled font-IYbold', (current < totalPages));
 
 
     $('#pages').empty()
@@ -322,8 +330,11 @@ function renderPagination(current, totalPages) {
 }
 
 function pageButton(i) {
-    currentPage = i;
-    fetchData(currentPage);
+    if (!(i == currentPage)){
+        currentPage = i;
+        fetchData(currentPage);
+    }
+    
 }
 
 
@@ -406,6 +417,27 @@ $(document).ready(function () {
         $(this).find('i').stop(true, true).fadeIn();
     });
 
+
+    let timeoutId;
+    $('#search-input').on('input', function () {
+        if (timeoutId) {
+                        clearTimeout(timeoutId);
+        }
+        if ($(this).val() === '') {
+            whileSreach = false;
+            fetchData(1);
+        } else {
+            
+            timeoutId = setTimeout(() => {
+                whileSreach = true;
+                console.log(whileSreach , $(this).val())
+            }, 300);
+        }
+
+
+    });
+
+
     
     $('#alert button').click(
         function () {
@@ -453,7 +485,7 @@ $(document).ready(function () {
 
             var idRegex = /^[1-9][0-9]{5}$/
             var phoneRegex = /^[0-9]{11}$/
-            var perRegex = /^[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/
+            var perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/
 
             let FN = false;
             let LN = false;
