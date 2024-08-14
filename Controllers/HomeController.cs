@@ -69,6 +69,40 @@ namespace UserManagement.Controllers
             });
 
         }
+
+        [HttpGet("home/search")]
+        public IActionResult Search(int page , int pageSize ,string input )
+        {
+
+            var totalUsers = ReadUsersFromFile();
+
+
+            List<User> users = [];
+            
+            
+            totalUsers.ForEach(e => {
+                if(e.FirstName.StartsWith(input) || e.LastName.StartsWith(input)|| e.Phone.StartsWith(input)|| e.State.StartsWith(input)|| e.City.StartsWith(input)) 
+                { users.Add(e); } 
+            });
+            
+            
+            var paginatedItems = users
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            var totalItems = users.Count;
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            return Ok(new
+            {
+                Data = paginatedItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            });
+
+        }
         
         
         [HttpPost("home/add")]
