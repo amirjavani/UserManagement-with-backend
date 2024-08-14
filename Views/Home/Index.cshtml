@@ -35,14 +35,34 @@
                     <input id="id-input" class="modal-input " type="text" placeholder="شماره پرسنلی" value="" />
                     <p class="modal-error text-danger fs-6 text-center">error</p>
                     <div id="modal-buttons" class="d-flex flex-row gap-1 modal-input">
-                        <button id="modal-submit-button" type="button" class="btn btn-success w-100">ثبت</button>
+                        <button id="add-submit-button" type="button" class="btn btn-success w-100">ثبت</button>
+                    <button id="edit-submit-button" data-bs-target="#edit-submit-modal" type="button" class="btn btn-success w-100">ثبت</button>
                         <button onclick="closeModal()" type="button" class="btn btn-danger">لغو</button>
-
                     </div>
                     
                 </form>
             </div>
         </div>
+
+
+        <!-- Edit Submit Modal -->
+        <div class="modal fade" id="edit-submit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
+              </div>
+              <div class="modal-body">
+                  آیا از ویرایش مطمعن هستید؟
+              </div>
+              <div class="modal-footer">
+                <button  type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>
+                    <button id="edit-submit-modal-button" type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">بله</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Delete Modal -->
         <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">

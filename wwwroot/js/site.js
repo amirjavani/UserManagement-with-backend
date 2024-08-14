@@ -17,6 +17,8 @@ function edit(button,ID) {
     $('.modal-error').hide();
     $('#modal h3').text('ویرایش');
     $('form')[0].reset();
+    $('#add-submit-button').hide();
+    $('#edit-submit-button').show();
     $('#modal').fadeIn();
 
 
@@ -35,7 +37,7 @@ function edit(button,ID) {
     $('#id-input').val(ID);
     
 
-    $('#modal-submit-button').off('click').click(function () {
+    $('#edit-submit-button').off('click').click(function () {
         
         $('.modal-error').hide()
         let firstName = $('#firstName-input').val();
@@ -103,41 +105,46 @@ function edit(button,ID) {
         if (FN || LN || PH || ST || CT || IDv) {
             return null;
         }
+        $('#edit-submit-modal').modal('show');
+        $('#edit-submit-modal-button').off('click').click(function () {
+            user = {
+                "firstName": firstName,
+                "lastName": lastName,
+                "phone": phone,
+                "city": city,
+                "state": state,
+                "id": id
+            };
 
-        user = {
-            "firstName": firstName,
-            "lastName": lastName,
-            "phone": phone,
-            "city": city,
-            "state": state,
-            "id": id
-        };
+
+            fetch('/home/edit/' + ID, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => {
+                    if (response.status === 409) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    fetchData(currentPage);
+                    closeModal();
+
+
+                })
+                .catch((error) => {
+                    $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
+                    $('.modal-error').eq(5).show();
+                });
+
+        }); 
+
         
-
-        fetch('/home/edit/'+ID, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then(response => {
-                if (response.status === 409) {
-                    return response.text().then(text => { throw new Error(text); });
-                }
-                return response.json();
-            })
-            .then(data => {
-                
-                fetchData(currentPage);
-                closeModal();
-                
-
-            })
-            .catch((error) => {
-                $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
-                $('.modal-error').eq(5).show();  
-            });
 
 
     })
@@ -346,27 +353,6 @@ function pageButton(i) {
 
 
 
-function saveData() {
-
-    fetch('/home/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(users)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            $('#alert').fadeIn(200);
-            $('#alert').fadeOut(2000);
-        })
-        .catch(error => {
-            console.error('There was a problem with the save operation:', error);
-        });
-}
-
 function handleCheckboxChange(checkbox, id) {
     
     if (checkbox.checked) {
@@ -479,10 +465,12 @@ $(document).ready(function () {
     $('#add-button').click(function () {
         $('#modal h3').text('افزودن');
         $('.modal-error').hide()
+        $('#add-submit-button').show();
+        $('#edit-submit-button').hide();
         $('form')[0].reset();
         $('#modal').fadeIn()
 
-        $('#modal-submit-button').off('click').click(function () {
+        $('#add-submit-button').off('click').click(function () {
             $('.modal-error').hide()
             let firstName = $('#firstName-input').val();
             let lastName = $('#lastName-input').val();
