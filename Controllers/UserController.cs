@@ -37,7 +37,7 @@ namespace UserManagement.Controllers
 
 
 
-        [HttpGet("home/fetch")]
+        [HttpGet("user/fetch-table")]
         public IActionResult GetItems(int page, int pageSize)
         {
 
@@ -60,7 +60,7 @@ namespace UserManagement.Controllers
 
         }
 
-        [HttpGet("home/search")]
+        [HttpGet("user/search")]
         public IActionResult Search(int page, int pageSize, string input)
         {
 
@@ -95,7 +95,7 @@ namespace UserManagement.Controllers
         }
 
 
-        [HttpPost("home/add")]
+        [HttpPost("user/add-new-user")]
         public IActionResult PostUser([FromBody] User user)
         {
 
@@ -121,7 +121,7 @@ namespace UserManagement.Controllers
 
 
 
-        [HttpPost("home/edit/{id}")]
+        [HttpPost("user/edit-user/{id}")]
         public IActionResult EditUser([FromBody] User user, [FromRoute] string id)
         {
 
@@ -167,7 +167,7 @@ namespace UserManagement.Controllers
         }
 
 
-        [HttpPost("home/remove/{id}")]
+        [HttpPost("user/single-delete/{id}")]
         public IActionResult DeleteUser([FromRoute] string id)
         {
 
@@ -190,7 +190,7 @@ namespace UserManagement.Controllers
         }
 
 
-        [HttpPost("home/removeList")]
+        [HttpPost("user/user-list-delete")]
         public IActionResult DeleteUsers([FromBody] List<int> numbers)
         {
 
@@ -219,8 +219,8 @@ namespace UserManagement.Controllers
             return Ok();
         }
 
-        [HttpPost("home/download")]
-        public IActionResult download()
+        [HttpPost("user-csv-file-download")]
+        public IActionResult UserCsvDownload()
         {
             var users = ReadUsersFromFile();
             return Ok(new { Data = users });
