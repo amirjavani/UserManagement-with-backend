@@ -16,7 +16,7 @@
         <div id="add-delete-buttons" class="d-flex flex-row gap-1">
             <butotn class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "User")'">کاربران </butotn>
             <button onclick="addGroup()" id="add-button" data-bs-toggle="modal" data-bs-target="#add-group-modal" class="btn btn-success">افزودن </button>
-            <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
+            <i id="delete-button" onclick="DeleteSelectedUsers()" class="btn btn-danger bi bi-trash3"></i>
         </div>
 
     </div>
@@ -98,7 +98,7 @@
                     <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
                 </div>
                 <div class="modal-body">
-                    آیا از حذف کاربران با کد پرسنلی <strong id="group-delete-modal-id"></strong> مطمعن هستید؟؟
+                    آیا از حذف گروه های با ای دی <strong id="group-delete-modal-id"></strong> مطمعن هستید؟؟
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>
@@ -119,7 +119,7 @@
                     <th data-dt-order="disable"></th>
                     <th>نام گروه</th>
                     <th>توضیحات</th>
-                    <th>تاریخ ایجاد</th>
+                    <th class="">تاریخ ایجاد</th>
                     <th id="last-col"></th>
                 </tr>
             </thead>

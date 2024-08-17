@@ -35,7 +35,7 @@ function fillTable(data) {
         var row = "<tr>" +
             '<td> <input type="checkbox" value="' + item.id + '" class="check-box" onchange="handleCheckboxChange(this, \'' + item.id + '\')"></td>'+
             '<td>' + item.groupName + "</td>" +
-            '<td>' + item.groupDiscription + "</td>" +
+            '<td class="group-discription">' + item.groupDiscription + "</td>" +
             '<td>' + item.createdDate + "</td>" +
             '<td>' +
             '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
@@ -78,6 +78,42 @@ function singleDelete(id) {
 
 }
 
+function DeleteSelectedUsers() {
+
+
+    $('#group-delete-modal').modal('show');
+    $('#group-delete-modal-id').html(
+        deleteList.map(e => '<span> ' + e + '</span>').join('،')
+    );
+    $('#group-delete-modal-submit').off('click').click(function () {
+
+        if (deleteList.length > 0) {
+            fetch('/group/group-list-delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(deleteList)
+
+            })
+                .then(response => {
+                    if (response.status === 409) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    fetchData(currentPage);
+
+                });
+
+            deleteList = []
+        }
+ 
+    });
+
+
+
+}
+
+
 
 function showGroupInfo(button, id) {
 
@@ -88,19 +124,17 @@ function showGroupInfo(button, id) {
 
     $('#info-form').children('div').eq(0).html(
         '<p> نام گروه: </p>' +
-        '<p>توضیحات: </p>' +
-        '<p>تاریخ ایجاد: </p>' +
-        '<p>کد گروه: </p>' 
+        '<p class="text-nowrap">تاریخ ایجاد: </p>' +
+        '<p>کد گروه: </p>' +
+        '<p>توضیحات: </p>' 
     )
 
     $('#info-form').children('div').eq(1).empty();
 
     $('#info-form').children('div').eq(1).append('<p>' + groupName + '</p>')
-    $('#info-form').children('div').eq(1).append('<p>' + groupDiscription + '</p>')
     $('#info-form').children('div').eq(1).append('<p>' + date + '</p>')
     $('#info-form').children('div').eq(1).append('<p>' + id + '</p>')
-
-
+    $('#info-form').children('div').eq(1).append('<p>' + groupDiscription + '</p>')
 
 }
 

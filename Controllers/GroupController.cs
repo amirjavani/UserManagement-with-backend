@@ -106,6 +106,24 @@ namespace UserManagement.Controllers
 
         }
 
+        [HttpPost("group/group-list-delete")]
+        public IActionResult DeleteSelectedGroup([FromBody] List<Guid> numbers)
+        {
+
+            var groups = ReadGroupsFromFile();
+
+            // Filter out the groups that need to be removed
+            var groupsToRemove = groups.Where(g => numbers.Contains(g.ID)).ToList();
+
+            foreach (var user in groupsToRemove)
+            {
+                groups.Remove(user);
+            }
+
+            WriteGroupsToFile(groups);
+            return Ok();
+        }
+
 
         public IActionResult Index()
         {

@@ -16,3 +16,12 @@
 .add-group-modal-body input:focus,.add-group-modal-body textarea:focus {
     border-bottom: solid 2px;
 }
+
+
+.group-discription {
+    max-width: 200px;
+    max-height: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -2,25 +2,25 @@
   {
     "GroupName": "بدون بیمه",
     "GroupDiscription": "این گروه بیمه شامل آنها نمیشود",
-    "CreatedDate": "date",
-    "ID": "59280ab5-457a-40c2-8143-856c8dbcaf03"
+    "CreatedDate": "8/17/2024 3:13:44 PM",
+    "ID": "85c0476b-064b-4099-b142-9ccc9bd352b5"
   },
   {
     "GroupName": "با بیمه",
-    "GroupDiscription": "این گروه بیمه شامل آنها نمیشود",
-    "CreatedDate": "date",
-    "ID": "59280ab5-457a-40c2-8143-856c8dbcaf03"
+    "GroupDiscription": "این گروه بیمه شامل آنها میشود\t",
+    "CreatedDate": "8/17/2024 3:14:17 PM",
+    "ID": "7fd3ff44-445b-4f5b-b32f-b33aec7e1af0"
   },
   {
-    "GroupName": "گروه",
-    "GroupDiscription": "asdasdadasd",
-    "CreatedDate": "8/17/2024 2:18:20 PM",
-    "ID": "941fe2e2-65d0-4546-a963-0a2d92c0c524"
+    "GroupName": "گروه دو",
+    "GroupDiscription": "اطلاعات در مورد این گروه",
+    "CreatedDate": "8/17/2024 3:18:49 PM",
+    "ID": "dffce850-0ae6-43d7-8a9e-b3298ef08f92"
   },
   {
-    "GroupName": "گروه یک",
-    "GroupDiscription": "3123123شسیشیس",
-    "CreatedDate": "8/17/2024 2:21:38 PM",
-    "ID": "24c7455d-c408-48e9-826b-5975af204c4f"
+    "GroupName": "گروه ",
+    "GroupDiscription": "شسیشسی شس ی شسی شس ی شسیشسیش سی شس ی شسی شس ی سش ی سشی شس ی شسی شس ی",
+    "CreatedDate": "8/17/2024 3:31:20 PM",
+    "ID": "80fbb6d6-e61d-4fc5-8770-6705d5b38e38"
   }
 ]
