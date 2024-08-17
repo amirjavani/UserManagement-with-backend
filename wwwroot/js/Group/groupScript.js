@@ -33,14 +33,13 @@ function fillTable(data) {
 
     data.forEach(item => {
         var row = "<tr>" +
-            '<td> <input type="checkbox" value="' + item.id + '" class="check-box" onchange="handleCheckboxChange(this, "' + item.id + '")"></td>'+
+            '<td> <input type="checkbox" value="' + item.id + '" class="check-box" onchange="handleCheckboxChange(this, \'' + item.id + '\')"></td>'+
             '<td>' + item.groupName + "</td>" +
             '<td>' + item.groupDiscription + "</td>" +
             '<td>' + item.createdDate + "</td>" +
             '<td>' +
             '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
             '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(\'' + item.id + '\')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>' +
-            '<button  id="edit-button" onclick=\"userEdit(this,\'' + item.id + '\')\"><i class=\"three-button bi bi-pencil-square\"></i><span class="">ویرایش</span></button>' +
             '<button data-bs-toggle="modal" data-bs-target="#show-info-modal" id="show-button" onclick="showGroupInfo(this, \'' + item.id + '\')"><i class="three-button bi bi-card-text"></i><span class="">نمایش</span></button>'
             '</div>' +
             '</td>' +
@@ -52,6 +51,30 @@ function fillTable(data) {
     $('.table-container').css('visibility', 'visible');
     $('table').fadeIn();
     $('#three-button button span').hide();
+
+}
+
+
+function singleDelete(id) {
+    $('#delete-modal-id').text(id);
+    $('#delete-modal-submit').off('click').on('click', function () {
+
+        fetch('/group/single-delete/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+        })
+            .then(response => {
+                if (response.status === 409) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                $('#delete-modal').modal('hide')
+                fetchData(currentPage);
+                
+            });
+    });
 
 }
 
@@ -141,8 +164,6 @@ function addGroup() {
             })
             .catch((error) => {
             });
-
-
 
 
     });

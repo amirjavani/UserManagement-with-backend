@@ -55,7 +55,14 @@ function userEdit(button, ID) {
             $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
             $('.modal-error').eq(5).show();
             return null;
-        } if (!perRegex.test(firstName)) {
+        } if (group === '') {
+
+            $('.modal-error').eq(5).text('لطفا گروه را مشخص کنید!!')
+            $('.modal-error').eq(5).show();
+            return null;
+        }
+
+        if (!perRegex.test(firstName)) {
             $('.modal-error').eq(0).text('ورودی نامعتبر!')
             $('.modal-error').eq(0).show();
             FN = true;
@@ -211,7 +218,13 @@ function addUser() {
             $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
             $('.modal-error').eq(5).show();
             return null;
-        } if (!perRegex.test(firstName)) {
+        }if (group === '') {
+
+            $('.modal-error').eq(5).text('لطفا گروه را مشخص کنید!!')
+            $('.modal-error').eq(5).show();
+            return null;
+        }
+        if (!perRegex.test(firstName)) {
             $('.modal-error').eq(0).text('ورودی نامعتبر!')
             $('.modal-error').eq(0).show();
             FN = true;

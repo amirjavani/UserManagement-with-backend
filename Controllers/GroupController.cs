@@ -84,6 +84,28 @@ namespace UserManagement.Controllers
             return Ok(new { Message = true, groups = group });
         }
 
+        [HttpPost("group/single-delete/{id}")]
+        public IActionResult DeleteGroup([FromRoute] string id)
+        {
+
+            var groups = ReadGroupsFromFile();
+            Group existingGroup = groups.FirstOrDefault(u => u.ID.ToString() == id);
+
+
+
+            if (existingGroup != null)
+            {
+                groups.Remove(existingGroup);
+
+                WriteGroupsToFile(groups);
+
+                return Ok();
+            }
+
+            return Conflict();
+
+        }
+
 
         public IActionResult Index()
         {
