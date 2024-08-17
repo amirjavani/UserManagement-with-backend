@@ -275,6 +275,11 @@ div.dt-container .dt-paging .dt-paging-button:hover{
     width:50%;
 }
 
+.modal-error{
+    font-size:13px;
+    margin:0px auto;
+}
+
 
 @media (max-width:1024px) {
     #add-delete-buttons {

@@ -15,13 +15,60 @@
 
         <div id="add-delete-buttons" class="d-flex flex-row gap-1">
             <butotn class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "User")'">کاربران </butotn>
-            <button id="add-button" class="btn btn-success">افزودن </button>
+            <button onclick="addGroup()" id="add-button" data-bs-toggle="modal" data-bs-target="#add-group-modal" class="btn btn-success">افزودن </button>
             <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
         </div>
 
     </div>
     <!-- Add Modal -->
-    
+    <div class="modal fade" id="add-group-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-card-text"></i> افزودن گروه</h5>
+                </div>
+                <div class="modal-body d-flex flex-column gap-4 add-group-modal-body px-4 my-2 justify-content-center">
+                    <input class="col-8 p-2" type="type" value="" placeholder="نام گروه" />
+                    <p class="modal-error text-danger"></p>
+                    <textarea type="type"  value=""  placeholder="توضیحات"></textarea>
+                    <p class="modal-error text-danger"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="add-group-modal-submit-button"  type="button" class="btn btn-success">ثبت</button>
+
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">بستن</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Info Modal -->
+    <div class="modal fade" id="show-info-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-card-text"></i> اطلاعات</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-row gap-2" id="info-form">
+                        <div class="">
+                        </div>
+                        <div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -36,6 +83,7 @@
                     <th>نام گروه</th>
                     <th>توضیحات</th>
                     <th>تاریخ ایجاد</th>
+                    <th id="last-col"></th>
                 </tr>
             </thead>
             <tbody class="font-IYnum">

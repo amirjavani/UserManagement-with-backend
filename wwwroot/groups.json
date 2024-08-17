@@ -1,10 +1,32 @@
-[{
-  "groupName": "بدون بیمه",
-  "groupDiscription": "این گروه بیمه شامل آنها نمیشود",
-  "createdDate": "date"
- },{
-  "groupName": "با بیمه",
-  "groupDiscription": "این گروه بیمه شامل آنها نمیشود",
-  "createdDate": "date"
- }
+[
+  {
+    "GroupName": "بدون بیمه",
+    "GroupDiscription": "این گروه بیمه شامل آنها نمیشود",
+    "CreatedDate": "date",
+    "ID": "59280ab5-457a-40c2-8143-856c8dbcaf03"
+  },
+  {
+    "GroupName": "با بیمه",
+    "GroupDiscription": "این گروه بیمه شامل آنها نمیشود",
+    "CreatedDate": "date",
+    "ID": "59280ab5-457a-40c2-8143-856c8dbcaf03"
+  },
+  {
+    "GroupName": "گروه",
+    "GroupDiscription": "asdasdadasd",
+    "CreatedDate": "8/17/2024 2:18:20 PM",
+    "ID": "941fe2e2-65d0-4546-a963-0a2d92c0c524"
+  },
+  {
+    "GroupName": "گروه",
+    "GroupDiscription": "asdasdadasd",
+    "CreatedDate": "8/17/2024 2:18:33 PM",
+    "ID": "2ee102cc-431e-402f-b7ea-eb0496f29c7f"
+  },
+  {
+    "GroupName": "گروه یک",
+    "GroupDiscription": "3123123شسیشیس",
+    "CreatedDate": "8/17/2024 2:21:38 PM",
+    "ID": "24c7455d-c408-48e9-826b-5975af204c4f"
+  }
 ]

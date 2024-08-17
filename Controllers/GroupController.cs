@@ -39,6 +39,52 @@ namespace UserManagement.Controllers
 
 
 
+        [HttpGet("group/fetch-table")]
+        public IActionResult GetItems(int page, int pageSize)
+        {
+
+            var groups = ReadGroupsFromFile();
+            var paginatedItems = groups
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            var totalItems = groups.Count;
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            return Ok(new
+            {
+                Data = paginatedItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            });
+
+        }
+
+
+        [HttpPost("user/add-new-group")]
+        public IActionResult AddNewGroup([FromBody] Group group)
+        {
+
+            if (group == null)
+            {
+                return BadRequest("Invalid user data.");
+            }
+            var groups = ReadGroupsFromFile();
+
+
+            string currentDateTime = DateTime.Now.ToString();
+            Guid id = Guid.NewGuid();
+
+            groups.Add(new Group (group.GroupName , group.GroupDiscription , currentDateTime , id  ));
+
+            WriteGroupsToFile(groups);
+
+            return Ok(new { Message = true, groups = group });
+        }
+
+
         public IActionResult Index()
         {
             return View();
@@ -47,9 +93,17 @@ namespace UserManagement.Controllers
 
     public class Group
     {
+        public Group(string groupName, string groupDiscription, string createdDate, Guid iD)
+        {
+            GroupName = groupName;
+            GroupDiscription = groupDiscription;
+            CreatedDate = createdDate;
+            ID = iD;
+        }
+
         public string GroupName { get; set; }
         public string GroupDiscription { get; set; }
         public string CreatedDate { get; set; }
-        public string ID { get; set; }
+        public Guid ID { get; set; }
     }
 }

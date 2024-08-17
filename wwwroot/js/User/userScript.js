@@ -175,66 +175,6 @@ function showUserInfo(button, id) {
 
 }
 
-function downloadCSVfile() {
-
-
-    fetch('/user-csv-file-download', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-
-            let users = data.data;
-
-            if (users.length === 0) {
-                console.log('empty table');
-                return null;
-            }
-
-            let csv = '';
-            csv += '\uFEFF';
-
-
-            const headers = Object.keys(users[0]);
-            csv += headers.join(',') + '\n';
-
-
-            users.forEach(obj => {
-                const values = headers.map(header => {
-
-                    const value = obj[header] || '';
-                    return `"${value.toString().replace(/"/g, '""')}"`;
-                });
-                csv += values.join(',') + '\n';
-            });
-
-
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = window.URL.createObjectURL(blob);
-
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'data.csv';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-
-
-            window.URL.revokeObjectURL(url);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
-
-
-}
-
 function addUser() {
     $('#modal h3').text('افزودن');
     $('.modal-error').hide()
@@ -349,6 +289,66 @@ function addUser() {
 
 
     });
+
+}
+
+function downloadCSVfile() {
+
+
+    fetch('/user-csv-file-download', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            let users = data.data;
+
+            if (users.length === 0) {
+                console.log('empty table');
+                return null;
+            }
+
+            let csv = '';
+            csv += '\uFEFF';
+
+
+            const headers = Object.keys(users[0]);
+            csv += headers.join(',') + '\n';
+
+
+            users.forEach(obj => {
+                const values = headers.map(header => {
+
+                    const value = obj[header] || '';
+                    return `"${value.toString().replace(/"/g, '""')}"`;
+                });
+                csv += values.join(',') + '\n';
+            });
+
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.csv';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+
+
 
 }
 
