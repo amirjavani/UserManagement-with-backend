@@ -21,8 +21,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\Assets\" />
-    <Folder Include="wwwroot\css\GroupController\" />
-    <Folder Include="wwwroot\js\GroupController\" />
+    <Folder Include="wwwroot\css\Group\" />
+    <Folder Include="wwwroot\css\Home\" />
+    <Folder Include="wwwroot\css\User\" />
+    <Folder Include="wwwroot\js\Group\" />
+    <Folder Include="wwwroot\js\Home\" />
+    <Folder Include="wwwroot\js\User\" />
   </ItemGroup>
 
 </Project>

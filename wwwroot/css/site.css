@@ -1,27 +1,27 @@
 @font-face {
     font-family: IranYekanThin;
-    src: url(../Assets/fonts/IRANYekanThin.ttf);
+    src: url(./Assets/fonts/IRANYekanThin.ttf);
 }
 
 @font-face {
     font-family: IranYekanBold;
-    src: url(../Assets/fonts/IRANYekanBold.ttf);
+    src: url(./Assets/fonts/IRANYekanBold.ttf);
     font-weight: bold;
 }
 
 @font-face {
     font-family: IranYekanRegular;
-    src: url(../Assets/fonts//IRANYekanRegular.ttf);
+    src: url(./Assets/fonts//IRANYekanRegular.ttf);
 }
 
 @font-face {
     font-family: IranYekanLight;
-    src: url(../Assets/fonts/IRANYekanLight.ttf);
+    src: url(./Assets/fonts/IRANYekanLight.ttf);
 }
 
 @font-face {
     font-family: farsiNum;
-    src: url(../Assets/fonts/IRANYekanRegularFaNum.ttf);
+    src: url(./Assets/fonts/IRANYekanRegularFaNum.ttf);
 }
 
 .font-IYnum {

@@ -5,19 +5,13 @@
 }
 
 
-@{
-    ViewData["Title"] = "Home Page";
-    //@model IEnumerable<UserManagement.Controllers.User>
-
-}
-
-
 <div id="main-page" class="d-flex flex-column px-2 py-5 p-sm-5">
     <div id="header" class="d-flex flex-row justify-content-between p-2">
 
         <input id="search-input" placeholder="جستجو" type="search"></input>
 
-        <div id="add-delete-buttons" class="  d-flex flex-row gap-1">
+        <div id="add-delete-buttons" class="d-flex flex-row gap-1">
+            <butotn class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "User")'">کاربران </butotn>
             <button id="add-button" class="btn btn-success">افزودن </button>
             <i id="delete-button" class="btn btn-danger bi bi-trash3"></i>
         </div>
