@@ -1,4 +1,7 @@
 ﻿
+
+let userBirthDay;
+
 function userEdit(button, ID) {
 
 
@@ -7,7 +10,11 @@ function userEdit(button, ID) {
     $('form')[0].reset();
     $('#add-submit-button').hide();
     $('#edit-submit-button').show();
+
+
+    
     $('#modal').fadeIn();
+    
 
 
     var firstName = $(button).closest('tr').find('td').eq(1).text();
@@ -27,6 +34,17 @@ function userEdit(button, ID) {
     $('#id-input').val(ID);
 
 
+    $(' #modal input').each(function () {
+        if ($(this).val()) {
+            // If the input has a value, move the label to the active position
+            $(this).closest('div').find('label').css({
+                right: '-7px',
+                top: '-2px',
+                fontSize: '10px',// Adjust this to your preferred active font size
+            });
+        }
+    });
+
     $('#edit-submit-button').off('click').click(function () {
 
         $('.modal-error').hide()
@@ -36,6 +54,7 @@ function userEdit(button, ID) {
         let city = $('#city-input').val();
         let state = $('#state-input').val();
         let group = $('#group-select').val();
+        let birth = $('#user-birth-select').val();
         let id = $('#id-input').val();
 
 
@@ -50,7 +69,7 @@ function userEdit(button, ID) {
         let CT = false;
         let IDv = false;
 
-        if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '') {
+        if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '' || birth === '') {
 
             $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
             $('.modal-error').eq(5).show();
@@ -112,6 +131,7 @@ function userEdit(button, ID) {
                 "city": city,
                 "state": state,
                 "group": group,
+                "birthDay": userBirthDay,
                 "id": id
             };
 
@@ -190,7 +210,19 @@ function addUser() {
     $('form')[0].reset();
     $('#modal').fadeIn();
 
+    
 
+
+    $(' #modal input').each(function () {
+        if (!($(this).val())) {
+            // If the input has a value, move the label to the active position
+            $(this).closest('div').find('label').css({
+                right: '8px',
+                top: '8px',
+                fontSize: '16px'// Adjust this to your preferred active font size
+            });
+        }
+    });
 
     $('#add-submit-button').off('click').click(function () {
         $('.modal-error').hide()
@@ -464,10 +496,12 @@ function DeleteSelectedUsers() {
 
 function fillTable(data) {
     deleteList = []
-    var tbody = $('tbody');
-    $('table').hide();
+    var tbody = $('#data-table table tbody');
+    $('#data-table table').hide();
     tbody.empty();
-
+    if (data.length === 0) {
+        tbody.append('<tr > <td colspan="8" class="font-IYbold">داده ای پیدا نشد!! :(</td></tr>');
+    }
 
 
     data.forEach(item => {
@@ -492,7 +526,7 @@ function fillTable(data) {
 
     $('#spinner').hide();
     $('.table-container').css('visibility', 'visible');
-    $('table').fadeIn();
+    $('#data-table table').fadeIn();
     $('#three-button button span').hide();
 
 }
@@ -500,5 +534,75 @@ function fillTable(data) {
 $(document).ready(function () {
     getGroups();
     fetchData(currentPage);
-    console.log('users')
+
+    $('#user-birth-input').persianDatepicker({
+        initialValue: false, // Whether to show the initial value or not
+        autoClose: true, // Close the calendar when a date is selected
+        navigator: {
+            scroll: {
+                enabled: false // Disable scrolling in the navigator
+            }
+        },
+        format: 'YYYY/MM/DD', // Date format
+        initialValueType: 'persian',
+        minDate: -1192375544000,
+        maxDate: 1142843400000,// Type of initial value
+        checkYear: function (year) {
+            return !(year >= 1385 || year <= 1300); // Validate the year
+        },
+        onSelect: function (unix) {
+            $(' #modal input').each(function () {
+                if ($(this).val()) {
+                    // If the input has a value, move the label to the active position
+                    $(this).closest('div').find('label').css({
+                        right: '-7px',
+                        top: '-2px',
+                        fontSize: '10px',// Adjust this to your preferred active font size
+                    });
+                }
+            });
+            userBirthDay = unix;
+
+        },
+    });
+
+
+    $('input').on({
+        focus: function () {
+            $(this).closest('div').find('label').animate({
+                right: '-7px',
+                top: '-2px',
+                fontSize: '10px',
+            });
+        },
+        
+        input: function () {
+            $(this).closest('div').find('label').animate({
+                right: '-7px',
+                top: '-2px',
+                fontSize: '10px',
+            });
+        },
+        blur: function () {
+            const inputElement = $(this);
+
+            setTimeout(() => {
+                if (inputElement.val()) {
+                    inputElement.closest('div').find('label').animate({
+                        right: '-7px',
+                        top: '-2px',
+                        fontSize: '10px'
+                    });
+                } else {
+                    inputElement.closest('div').find('label').animate({
+                        right: '8px',
+                        top: '8px',
+                        fontSize: '16px'
+                    });
+                }
+            }, 200);
+        }
+            
+        
+    })
 })

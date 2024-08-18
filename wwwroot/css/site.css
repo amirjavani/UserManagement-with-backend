@@ -157,7 +157,7 @@ th {
 #modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 40px;
+    padding: 40px 70px;
     border: 1px solid #888;
     width: 500px;
     position:relative;
@@ -215,7 +215,7 @@ th {
 }
 
 .modal-input{
-    width:90%;
+    width:100%;
 }
 
 #alert{
@@ -276,7 +276,7 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 }
 
 .modal-error{
-    font-size:13px;
+    font-size:12px;
     margin:0px auto;
 }
 
@@ -310,11 +310,12 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 
 
     .modal-input {
-        width: 90%;
+        width: 100%;
     }
     #modal-content {
         
         width: 400px;
+        padding:40px 40px;
         
     }
     
@@ -354,11 +355,11 @@ div.dt-container .dt-paging .dt-paging-button:hover{
         font-size:10px;
     }
     .modal-input {
-        width: 90%;
+        width: 100%;
     }
 
     #modal-content {
-        width: 90%;
+        width: 100%;
     }
     #alert ,.btn-close  {
         font-size:10px;

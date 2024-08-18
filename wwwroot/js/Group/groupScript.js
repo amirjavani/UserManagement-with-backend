@@ -4,7 +4,7 @@ function fetchData(page) {
 
     if (whileSreach) {
         let input = $('#search-input').val();
-        fetch(`/Home/search?page=${page}&pageSize=${pageSize}&input=${input}`)
+        fetch(`/group/search?page=${page}&pageSize=${pageSize}&input=${input}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -23,11 +23,18 @@ function fetchData(page) {
 
 }
 
+
+
+
+
 function fillTable(data) {
     deleteList = []
     var tbody = $('tbody');
     $('table').hide();
     tbody.empty();
+    if (data.length === 0) {
+        tbody.append('<tr > <td colspan="5" class="font-IYbold">داده ای پیدا نشد!! :(</td></tr>');
+    }
 
 
 
@@ -78,7 +85,7 @@ function singleDelete(id) {
 
 }
 
-function DeleteSelectedUsers() {
+function DeleteSelectedGroup() {
 
 
     $('#group-delete-modal').modal('show');

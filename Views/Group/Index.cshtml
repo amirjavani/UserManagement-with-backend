@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "گروه";
+        
 }
 
 <link rel="stylesheet" type="text/css" href="~/css/Group/groupStyle.css" asp-append-version="true" />
@@ -16,7 +18,7 @@
         <div id="add-delete-buttons" class="d-flex flex-row gap-1">
             <butotn class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "User")'">کاربران </butotn>
             <button onclick="addGroup()" id="add-button" data-bs-toggle="modal" data-bs-target="#add-group-modal" class="btn btn-success">افزودن </button>
-            <i id="delete-button" onclick="DeleteSelectedUsers()" class="btn btn-danger bi bi-trash3"></i>
+            <i id="delete-button" onclick="DeleteSelectedGroup()" class="btn btn-danger bi bi-trash3"></i>
         </div>
 
     </div>
@@ -30,7 +32,7 @@
                 <div class="modal-body d-flex flex-column gap-4 add-group-modal-body px-4 my-2 justify-content-center">
                     <input class="col-8 p-2" type="type" value="" placeholder="نام گروه" />
                     <p class="modal-error text-danger"></p>
-                    <textarea type="type"  value=""  placeholder="توضیحات"></textarea>
+                    <textarea type="type" maxlength="256" value="" placeholder="توضیحات"></textarea>
                     <p class="modal-error text-danger"></p>
                 </div>
                 <div class="modal-footer">
@@ -80,7 +82,7 @@
                     <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
                 </div>
                 <div class="modal-body">
-                    آیا از حذف گروه با ای دی  <strong id="delete-modal-id"></strong> مطمعن هستید؟؟
+                    آیا از حذف گروه با ای دی  <strong id="delete-modal-id"></strong> مطمئن هستید؟؟
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>

@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "کاربر";
 }
 <link rel="stylesheet" type="text/css" href="~/css/User/userStyle.css" asp-append-version="true" />
 
@@ -15,7 +16,8 @@
         <input id="search-input" placeholder="جستجو" type="search"></input>
 
         <div id="add-delete-buttons" class="slm  d-flex flex-row gap-1">
-            <button id="Groups-page-button" onclick="location.href='@Url.Action("Index", "Group")'" class="btn btn-secondary">گروه ها </button>
+            <button id="Groups-page-button" onclick="location.href='@Url.Action("Index", "Group")'" class="btn btn-secondary">گروه‌ها 
+                </button>
             <button id="add-button" onclick="addUser()" class="btn btn-success">افزودن </button>
             <i id="delete-button" onclick="DeleteSelectedUsers()" class="btn btn-danger bi bi-trash3"></i>
         </div>
@@ -27,18 +29,41 @@
             <i id="close-modal-button" class="bi bi-x"></i>
             <h3 class="font-IYbold mx-auto text-center">افزودن</h3>
             <form id="add-form" class="d-flex flex-column gap-2 ">
-                <input id="firstName-input" class="modal-input " type="text" placeholder="نام" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
-                <input id="lastName-input" class="modal-input   " type="text" placeholder="نام خانوادگی" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
-                <input id="phone-input" class="modal-input  " type="text" placeholder="تلفن" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
-                <input id="city-input" class="modal-input   " type="text" placeholder="استان" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
-                <input id="state-input" class="modal-input  " type="text" placeholder="شهر" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
-                <input id="id-input" class="modal-input " type="text" placeholder="شماره پرسنلی" value="" />
-                <p class="modal-error text-danger fs-6 text-center">error</p>
+                <div class="position-relative ">
+                    <label for="firstName-input" class="form-label">نام</label>
+                    <input id="firstName-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="lastName-input" class="form-label">نام خانوادگی</label>
+                    <input id="lastName-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="phone-input" class="form-label">تلفن</label>
+                    <input id="phone-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="state-input" class="form-label">استان</label>
+                    <input id="state-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="city-input" class="form-label">شهر</label>
+                    <input id="city-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="id-input" class="form-label">کد پرسنلی</label>
+                    <input id="id-input" class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
+                <div class="position-relative">
+                    <label for="user-birth-input" class="form-label">تاریخ تولد</label>
+                    <input id="user-birth-input" readonly  class="modal-input " type="text" value="" />
+                </div>
+                <p class="modal-error text-danger  text-center">error</p>
                 <div class="d-flex flex-row justify-content-between px-4">
                     <span>
                         گروه:
@@ -68,7 +93,7 @@
                     <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-exclamation-triangle text-danger fs-1"></i></h5>
                 </div>
                 <div class="modal-body">
-                    آیا از ویرایش مطمعن هستید؟
+                    آیا از ویرایش مطمئن هستید؟
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">خیر</button>
@@ -149,7 +174,7 @@
         <button href="#" class=" btn btn-close" data-dismiss="alert" aria-label="close"></button>
         جدول با موفقیت ذخیره شد !
     </div>
-    <div class="table-container font-IYregular " style="visibility:hidden;">
+    <div id="data-table" class="table-container font-IYregular " style="visibility:hidden;">
         <table>
             <thead class="font-IYbold">
                 <tr>

@@ -125,6 +125,42 @@ namespace UserManagement.Controllers
         }
 
 
+
+        [HttpGet("group/search")]
+        public IActionResult Search(int page, int pageSize, string input)
+        {
+
+            var totalgroups = ReadGroupsFromFile();
+
+
+            List<Group> groups = [];
+
+
+            totalgroups.ForEach(e => {
+                if (e.GroupName.StartsWith(input) || e.GroupDiscription.StartsWith(input))
+                { groups.Add(e); }
+            });
+
+
+            var paginatedItems = groups
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            var totalItems = groups.Count;
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            return Ok(new
+            {
+                Data = paginatedItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            });
+
+        }
+
+
         public IActionResult Index()
         {
             return View();

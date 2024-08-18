@@ -1,1 +1,11 @@
-﻿
+﻿.form-label{
+    position:absolute;
+    color:#aaa;
+    top:8px;
+    right:8px;
+}
+.form-active-label {
+    right: -7px; 
+    top: -2px; 
+    font-size: 10px;
+}
