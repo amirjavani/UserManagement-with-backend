@@ -1,6 +1,5 @@
 ﻿
 
-let userBirthDay;
 
 function userEdit(button, ID) {
 
@@ -22,7 +21,8 @@ function userEdit(button, ID) {
     var phone = $(button).closest('tr').find('td').eq(3).text();
     var state = $(button).closest('tr').find('td').eq(4).text();
     var city = $(button).closest('tr').find('td').eq(5).text();
-    var group = $(button).closest('tr').find('td').eq(6).text();
+    var birth = $(button).closest('tr').find('td').eq(6).text();
+    var group = $(button).closest('tr').find('td').eq(7).text();
 
 
     $('#firstName-input').val(firstName);
@@ -30,6 +30,7 @@ function userEdit(button, ID) {
     $('#phone-input').val(phone);
     $('#city-input').val(city);
     $('#state-input').val(state);
+    $('#user-birth-input').val(birth);
     $('#group-select').val(group);
     $('#id-input').val(ID);
 
@@ -54,7 +55,7 @@ function userEdit(button, ID) {
         let city = $('#city-input').val();
         let state = $('#state-input').val();
         let group = $('#group-select').val();
-        let birth = $('#user-birth-select').val();
+        let birth = $('#user-birth-input').val();
         let id = $('#id-input').val();
 
 
@@ -131,7 +132,7 @@ function userEdit(button, ID) {
                 "city": city,
                 "state": state,
                 "group": group,
-                "birthDay": userBirthDay,
+                "birthDay": birth,
                 "id": id
             };
 
@@ -178,7 +179,8 @@ function showUserInfo(button, id) {
     var phone = $(button).closest('tr').find('td').eq(3).text();
     var state = $(button).closest('tr').find('td').eq(4).text();
     var city = $(button).closest('tr').find('td').eq(5).text();
-    var group = $(button).closest('tr').find('td').eq(6).text();
+    var birth = $(button).closest('tr').find('td').eq(6).text();
+    var group = $(button).closest('tr').find('td').eq(7).text();
 
 
     $('#info-form').children('div').eq(0).html('<p>نام: </p>'+
@@ -186,7 +188,8 @@ function showUserInfo(button, id) {
                             '<p>تلفن: </p>'+
                            ' <p>آدرس: </p>'+
                             '<p>گروه: </p>' +
-                            '<p>کد پرسنلی: </p>' 
+                            '<p>کد پرسنلی: </p>' +
+                            '<p>تاریخ تولد: </p>' 
                             )
 
     $('#info-form').children('div').eq(1).empty();
@@ -195,8 +198,10 @@ function showUserInfo(button, id) {
     $('#info-form').children('div').eq(1).append('<p>' + lastName + '</p>')
     $('#info-form').children('div').eq(1).append('<p>' + phone + '</p>')
     $('#info-form').children('div').eq(1).append('<p>' + state + '، ' + city + '</p>')
+    
     $('#info-form').children('div').eq(1).append('<p>' + group + '</p>')
     $('#info-form').children('div').eq(1).append('<p>' + id + '</p>')
+    $('#info-form').children('div').eq(1).append('<p>' + birth + '</p>')
 
     
 
@@ -232,6 +237,7 @@ function addUser() {
         let city = $('#city-input').val();
         let state = $('#state-input').val();
         let group = $('#group-select').val();
+        let birth = $('#user-birth-input').val();
         let id = $('#id-input').val();
 
         var idRegex = /^[1-9][0-9]{5}$/
@@ -245,7 +251,7 @@ function addUser() {
         let CT = false;
         let ID = false;
 
-        if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '') {
+        if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '' || birth === '') {
 
             $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
             $('.modal-error').eq(5).show();
@@ -301,6 +307,7 @@ function addUser() {
             "city": city,
             "state": state,
             "group": group,
+            "birthDay": birth,
             "id": id
         }
 
@@ -512,6 +519,7 @@ function fillTable(data) {
             '<td>' + item.phone + "</td>" +
             '<td>' + item.city + "</td>" +
             '<td>' + item.state + "</td>" +
+            '<td>' + item.birthDay + "</td>" +
             '<td>' + item.group + "</td>" +
             '<td>' +
             '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
@@ -536,20 +544,19 @@ $(document).ready(function () {
     fetchData(currentPage);
 
     $('#user-birth-input').persianDatepicker({
-        initialValue: false, // Whether to show the initial value or not
-        autoClose: true, // Close the calendar when a date is selected
+        initialValue: false, 
+        autoClose: true,
+        startDate: "1310/12/29",
+        endDate: "1384/12/29",
+        
+        selectedDate: "1384/12/29",
         navigator: {
             scroll: {
-                enabled: false // Disable scrolling in the navigator
+                enabled: false
             }
         },
-        format: 'YYYY/MM/DD', // Date format
-        initialValueType: 'persian',
-        minDate: -1192375544000,
-        maxDate: 1142843400000,// Type of initial value
-        checkYear: function (year) {
-            return !(year >= 1385 || year <= 1300); // Validate the year
-        },
+        format: 'YYYY/MM/DD', 
+        
         onSelect: function (unix) {
             $(' #modal input').each(function () {
                 if ($(this).val()) {
@@ -561,7 +568,7 @@ $(document).ready(function () {
                     });
                 }
             });
-            userBirthDay = unix;
+
 
         },
     });

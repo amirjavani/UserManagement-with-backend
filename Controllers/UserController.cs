@@ -153,6 +153,7 @@ namespace UserManagement.Controllers
                     obj.LastName = user.LastName;
                     obj.Phone = user.Phone;
                     obj.State = user.State;
+                    obj.BirthDay = user.BirthDay;
                     obj.Group = user.Group;
                     obj.City = user.City;
                     break;
@@ -241,6 +242,7 @@ namespace UserManagement.Controllers
         public string Phone { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        public string BirthDay { get; set; }
         public string Group { get; set; }
         public string ID { get; set; }
     }

@@ -214,8 +214,9 @@ th {
     border-bottom: 1.5px solid #212121;
 }
 
-.modal-input{
-    width:100%;
+.modal-input {
+    width: 100%;
+    font-family: farsiNum;
 }
 
 #alert{
