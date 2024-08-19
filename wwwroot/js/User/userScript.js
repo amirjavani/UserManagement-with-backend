@@ -1,6 +1,6 @@
 ﻿
 
-
+var userChartData =[]
 function userEdit(button, ID) {
 
 
@@ -415,6 +415,8 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
+                initUserChart(data.data);
+
             });
     } else {
         fetch(`/user/fetch-table?page=${page}&pageSize=${pageSize}`)
@@ -423,6 +425,8 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
+                
+                initUserChart(data.data);
             });
     }
 
@@ -464,6 +468,30 @@ function getGroups() {
 
                 ;
         });
+
+}
+
+function initUserChart(data) {
+
+    userChartData = []
+    groups.forEach(function (g) {
+        const count = data.filter(user => user.group === g.groupName).length;
+        userChartData.push({ label: g.groupName, y: count })
+    })
+
+    var options = {
+        title: {
+            text: "نمودار گروه"
+        },
+        data: [
+            {
+                type: "column",
+                dataPoints: userChartData
+            }
+        ]
+    };
+
+    $("#user-chart").CanvasJSChart(options);
 
 }
 
@@ -542,6 +570,11 @@ function fillTable(data) {
 $(document).ready(function () {
     getGroups();
     fetchData(currentPage);
+
+     
+
+    
+
 
     $('#user-birth-input').persianDatepicker({
         initialValue: false, 
