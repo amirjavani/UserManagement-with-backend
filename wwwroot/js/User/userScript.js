@@ -1,6 +1,8 @@
 ﻿
 
-var userChartData =[]
+var userChartData = []
+var chartTitle;
+var usersData;
 function userEdit(button, ID) {
 
 
@@ -469,8 +471,8 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
-                
-                initUserChart(data.data);
+                usersData = data.data
+                initUserChart();
             });
     }
 
@@ -515,17 +517,56 @@ function getGroups() {
 
 }
 
-function initUserChart(data) {
+function initUserChart() {
 
     userChartData = []
-    groups.forEach(function (g) {
-        const count = data.filter(user => user.group === g.groupName).length;
-        userChartData.push({ label: g.groupName, y: count })
-    })
+
+    switch (chartTitle) {
+        case 'گروه':
+            groups.forEach(function (g) {
+                const count = usersData.filter(user => user.group === g.groupName).length;
+                userChartData.push({ label: g.groupName, y: count })
+            })
+
+            break;
+        case 'استان':
+
+            const stateCount = {};
+
+            usersData.forEach(user => {
+                const state = user.state;
+                stateCount[state] = (stateCount[state] || 0) + 1;
+            });
+
+            userChartData = Object.keys(stateCount).map(state => {
+                return { label: state, y: stateCount[state] }; // Fixed the typo from "lebel" to "label"
+            });
+
+            console.log(userChartData);
+
+            break;
+        case 'شهر':
+            const cityCount = {};
+
+            usersData.forEach(user => {
+                const city = user.city;
+                cityCount[city] = (cityCount[city] || 0) + 1;
+            });
+
+            userChartData = Object.keys(cityCount).map(city => {
+                return { label: city, y: cityCount[city] }; // Fixed the typo from "lebel" to "label"
+            });
+
+            console.log(userChartData);
+
+            break;
+        
+
+    }
 
     var options = {
         title: {
-            text: "نمودار گروه"
+            text: ("نمودار " + chartTitle)
         },
         data: [
             {
@@ -534,6 +575,9 @@ function initUserChart(data) {
             }
         ]
     };
+
+    
+   
 
     $("#user-chart").CanvasJSChart(options);
 
@@ -611,8 +655,16 @@ function fillTable(data) {
 
 }
 
+
+function handleChartSelectChange(select) {
+    chartTitle = select.value
+     initUserChart()
+}
+
 $(document).ready(function () {
     getGroups();
+    chartTitle = $('#chart-select').val();
+
     fetchData(currentPage);
 
     $('#user-birth-input').persianDatepicker({
