@@ -32,7 +32,10 @@
                 <div class="modal-body d-flex flex-column gap-4 add-group-modal-body px-4 my-2 justify-content-center">
                     <input class="col-8 p-2" type="type" value="" placeholder="نام گروه" />
                     <p class="modal-error text-danger"></p>
-                    <textarea type="type" maxlength="256" value="" placeholder="توضیحات"></textarea>
+                    <div id="discription-div" class="position-relative w-100">
+                        <textarea  class="w-100" type="type" maxlength="256" value="" placeholder="توضیحات"></textarea>
+                        <div class="dis-limit-text font-IYnum"><span>0</span>/256 </div>
+                    </div>
                     <p class="modal-error text-danger"></p>
                 </div>
                 <div class="modal-footer">

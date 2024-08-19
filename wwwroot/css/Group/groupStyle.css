@@ -25,3 +25,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.dis-limit-text{
+    font-size:10px;
+    position:absolute;
+    left:15px;
+    bottom:10px;
+    color:#aaa;
+}

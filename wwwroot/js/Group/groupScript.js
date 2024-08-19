@@ -167,11 +167,12 @@ function addGroup() {
 
     $('#add-group-modal-submit-button').off('click').click(function () {
         $('.modal-error').hide()
-        
+
         let groupName = $('.add-group-modal-body').find('input').val()
         let dis = $('.add-group-modal-body').find('textarea').val()
 
-        var perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی\s]+$/
+        const perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی\s]+$/
+        const specialRegex = /[~!@#$%^&*{}\[\]\\/]/;
         let GN = false;
         let DS = false;
 
@@ -180,10 +181,13 @@ function addGroup() {
             $('.modal-error').eq(1).show();
             return null;
         } if (!perRegex.test(groupName)) {
-            $('.modal-error').eq(0).text('ورودی نامعتبر!')
+            $('.modal-error').eq(0).text('فقط حروف فارسی مجاز است.')
             $('.modal-error').eq(0).show();
             GN = true;
-
+        } if (specialRegex.test(dis)) {
+            $('.modal-error').eq(1).text('توضیحات نباید شامل [~!@#$%^&*{}\[\]\\/] باشد')
+            $('.modal-error').eq(1).show();
+            DS=true
         }
 
         if (GN || DS ) {
@@ -226,5 +230,8 @@ function addGroup() {
 $(document).ready(function () {
     console.log('group')
     fetchData(currentPage);
+    $('#discription-div textarea').keyup(function () {
+        $("#discription-div div span").text($(this).val().length)
+    })
 
 })
