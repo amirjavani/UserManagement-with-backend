@@ -179,7 +179,7 @@ th {
 }
 
 #add-form input {
-    font-family: IranYekanRegular;
+    font-family: farsiNum;
     margin: 0px auto;
     padding: 10px 15px;
     border: none;
@@ -216,13 +216,14 @@ th {
 
 .modal-input {
     width: 100%;
+}
+input {
     font-family: farsiNum;
 }
-
-#alert{
-    top:5%;
-    right:40%;
-    z-index :4;
+#alert {
+    top: 5%;
+    right: 40%;
+    z-index: 4;
 }
 #alert button{
     border:none;
@@ -281,6 +282,11 @@ div.dt-container .dt-paging .dt-paging-button:hover{
     margin:0px auto;
 }
 
+
+#user-chart {
+    height: 370px;
+    width: 60%;
+}
 
 @media (max-width:1024px) {
     #add-delete-buttons {
@@ -380,5 +386,9 @@ div.dt-container .dt-paging .dt-paging-button:hover{
     #page-buttons {
         font-size: 14px;
         justify-content:center;
+    }
+
+    #user-chart {
+        width:100%;
     }
 }

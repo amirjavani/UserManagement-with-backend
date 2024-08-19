@@ -95,7 +95,6 @@ $(document).ready(function () {
             
             timeoutId = setTimeout(() => {
                 whileSreach = true;
-                console.log(whileSreach, $(this).val())
                 fetchData(1);
             }, 300);
         }

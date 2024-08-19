@@ -61,7 +61,10 @@ function userEdit(button, ID) {
 
         var idRegex = /^[1-9][0-9]{5}$/
         var phoneRegex = /^[0-9]{11}$/
-        var perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/
+        const perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی\s]+$/
+        const specialRegex = /[~!@#$%^&*{}\[\]\\/]/;
+
+
 
         let FN = false;
         let LN = false;
@@ -81,27 +84,48 @@ function userEdit(button, ID) {
             $('.modal-error').eq(5).show();
             return null;
         }
-
         if (!perRegex.test(firstName)) {
-            $('.modal-error').eq(0).text('ورودی نامعتبر!')
+            $('.modal-error').eq(0).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(0).show();
+            FN = true;
+
+        } if (specialRegex.test(firstName)) {
+            $('.modal-error').eq(0).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
             $('.modal-error').eq(0).show();
             FN = true;
 
         } if (!perRegex.test(lastName)) {
-            $('.modal-error').eq(1).text('ورودی نامعتبر!')
+            $('.modal-error').eq(1).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(1).show();
+
+            LN = true;
+
+        } if (specialRegex.test(lastName)) {
+            $('.modal-error').eq(1).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
             $('.modal-error').eq(1).show();
 
             LN = true;
 
         } if (!perRegex.test(city)) {
-            $('.modal-error').eq(3).text('ورودی نامعتبر!')
-            $('.modal-error').eq(3).show();
+            $('.modal-error').eq(4).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(4).show();
+
+            ST = true;
+
+        } if (specialRegex.test(city)) {
+            $('.modal-error').eq(4).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
+            $('.modal-error').eq(4).show();
 
             ST = true;
 
         } if (!perRegex.test(state)) {
-            $('.modal-error').eq(4).text('ورودی نامعتبر!')
-            $('.modal-error').eq(4).show();
+            $('.modal-error').eq(3).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(3).show();
+
+            CT = true;
+        } if (specialRegex.test(state)) {
+            $('.modal-error').eq(3).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
+            $('.modal-error').eq(3).show();
 
             CT = true;
         } if (!phoneRegex.test(phone)) {
@@ -110,15 +134,11 @@ function userEdit(button, ID) {
             PH = true;
 
         } if (!idRegex.test(id)) {
-            $('.modal-error').eq(5).text('کد پرسنلی باید 6 رقم باشد و با صفر شروع نشود!')
+            $('.modal-error').eq(5).text('کد پرسنلی باید 6 رقم باشد و با صفر شروع نشود.')
             $('.modal-error').eq(5).show();
             IDv = true;
 
-        } if (users.some(u => u.id === id && parseInt(u.id) !== ID)) {
-            $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
-            $('.modal-error').eq(5).show();
-            IDv = true
-        }
+        } 
 
         if (FN || LN || PH || ST || CT || IDv) {
             return null;
@@ -158,7 +178,7 @@ function userEdit(button, ID) {
 
                 })
                 .catch((error) => {
-                    $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
+                    $('.modal-error').eq(5).text('کد پرسنلی تکراری است')
                     $('.modal-error').eq(5).show();
                 });
 
@@ -242,7 +262,9 @@ function addUser() {
 
         var idRegex = /^[1-9][0-9]{5}$/
         var phoneRegex = /^[0-9]{11}$/
-        var perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/
+        const perRegex = /^[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی\s]+$/
+        const specialRegex = /[~!@#$%^&*{}\[\]\\/]/;
+
 
         let FN = false;
         let LN = false;
@@ -263,25 +285,47 @@ function addUser() {
             return null;
         }
         if (!perRegex.test(firstName)) {
-            $('.modal-error').eq(0).text('ورودی نامعتبر!')
+            $('.modal-error').eq(0).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(0).show();
+            FN = true;
+
+        } if (specialRegex.test(firstName)) {
+            $('.modal-error').eq(0).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
             $('.modal-error').eq(0).show();
             FN = true;
 
         } if (!perRegex.test(lastName)) {
-            $('.modal-error').eq(1).text('ورودی نامعتبر!')
+            $('.modal-error').eq(1).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(1).show();
+
+            LN = true;
+
+        } if (specialRegex.test(lastName)) {
+            $('.modal-error').eq(1).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
             $('.modal-error').eq(1).show();
 
             LN = true;
 
         } if (!perRegex.test(city)) {
-            $('.modal-error').eq(3).text('ورودی نامعتبر!')
-            $('.modal-error').eq(3).show();
+            $('.modal-error').eq(4).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(4).show();
+
+            ST = true;
+
+        } if (specialRegex.test(city)) {
+            $('.modal-error').eq(4).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
+            $('.modal-error').eq(4).show();
 
             ST = true;
 
         } if (!perRegex.test(state)) {
-            $('.modal-error').eq(4).text('ورودی نامعتبر!')
-            $('.modal-error').eq(4).show();
+            $('.modal-error').eq(3).text('فقط حروف فارسی مجاز است.')
+            $('.modal-error').eq(3).show();
+
+            CT = true;
+        } if (specialRegex.test(state)) {
+            $('.modal-error').eq(3).text('ورودی شامل [~!@#$%^&*{}\[\]\\/] نباید باشد.')
+            $('.modal-error').eq(3).show();
 
             CT = true;
         } if (!phoneRegex.test(phone)) {
@@ -535,7 +579,7 @@ function fillTable(data) {
     $('#data-table table').hide();
     tbody.empty();
     if (data.length === 0) {
-        tbody.append('<tr > <td colspan="8" class="font-IYbold">داده ای پیدا نشد!! :(</td></tr>');
+        tbody.append('<tr > <td colspan="9" class="font-IYbold">داده ای پیدا نشد!! :(</td></tr>');
     }
 
 
