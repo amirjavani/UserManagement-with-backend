@@ -24,7 +24,18 @@ function fetchData(page) {
 }
 
 
+function gregorianToShamsi(greDate) {
+    var [date, time, ampm] = greDate.split(' ');
 
+    ampm = ampm==='PM'?'ب‌ظ':"ق‌ظ"
+
+    time = time+" "+ampm
+    const [month, day, year] = date.split('/');
+    
+    date = jalaali.toJalaali(parseInt(year), parseInt(month), parseInt(day))
+    const shamsi = date.jy + '/' + date.jm + '/' + date.jd + " " + time
+    return shamsi;
+}
 
 
 function fillTable(data) {
@@ -32,6 +43,7 @@ function fillTable(data) {
     var tbody = $('tbody');
     $('table').hide();
     tbody.empty();
+
     if (data.length === 0) {
         tbody.append('<tr > <td colspan="5" class="font-IYbold">داده ای پیدا نشد!! :(</td></tr>');
     }
@@ -39,11 +51,12 @@ function fillTable(data) {
 
 
     data.forEach(item => {
+        const shamsiDate=gregorianToShamsi(item.createdDate)
         var row = "<tr>" +
             '<td> <input type="checkbox" value="' + item.id + '" class="check-box" onchange="handleCheckboxChange(this, \'' + item.id + '\')"></td>'+
             '<td>' + item.groupName + "</td>" +
             '<td class="group-discription">' + item.groupDiscription + "</td>" +
-            '<td>' + item.createdDate + "</td>" +
+            '<td dir="ltr">' + shamsiDate + "</td>" +
             '<td>' +
             '<div id="three-button" class=\"d-flex flex-row gap-2 justify-content-center \">' +
             '<button data-bs-toggle="modal" data-bs-target="#delete-modal" id="single-delete-button" class="text-white" onclick=\"singleDelete(\'' + item.id + '\')\"><i class=\"three-button bi bi-trash3\"></i><span ">حذف</span></button>' +

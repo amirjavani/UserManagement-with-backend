@@ -571,11 +571,6 @@ $(document).ready(function () {
     getGroups();
     fetchData(currentPage);
 
-     
-
-    
-
-
     $('#user-birth-input').persianDatepicker({
         initialValue: false, 
         autoClose: true,
