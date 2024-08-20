@@ -93,6 +93,84 @@ namespace UserManagement.Controllers
             });
 
         }
+        
+        
+        [HttpGet("user/get-chart-data")]
+        public IActionResult ChartData(string label ,string input)
+        {
+
+            var totalUsers = ReadUsersFromFile();
+
+
+            List<User> users = [];
+
+            if (input!=null)
+            {
+                totalUsers.ForEach(e => {
+                if (e.FirstName.StartsWith(input) || e.LastName.StartsWith(input) || e.Phone.StartsWith(input) || e.State.StartsWith(input) || e.City.StartsWith(input) || e.Group.StartsWith(input))
+                { users.Add(e); }
+                 });
+            }
+            else
+            {
+                users = totalUsers;
+            }
+
+            switch (label)
+            {
+                case "گروه":
+
+
+
+
+
+                    return Ok(new
+                    {
+                        Massage= "group"
+                    });
+                case "استان":
+                    return Ok(new
+                    {
+                        Massage = "state"
+
+                    }); 
+                case "شهر":
+
+
+
+                    var cityCount = new Dictionary<string, int>();
+
+                    foreach (var user in users)
+                    {
+                        if (cityCount.ContainsKey(user.City))
+                        {
+                            cityCount[user.City]++;
+                        }
+                        else
+                        {
+                            cityCount[user.City] = 1;
+                        }
+                    }
+
+                    // Prepare data for the chart
+                    var userChartData = cityCount.Select(city => new
+                    {
+                        label = city.Key,
+                        count = city.Value
+                    }).ToList();
+
+
+                    return Ok(new
+                    {
+                        Data = userChartData
+                    }); ;
+                    
+                
+            }
+
+            return Conflict();
+
+        }
 
 
         [HttpPost("user/add-new-user")]

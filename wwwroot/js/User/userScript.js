@@ -3,6 +3,9 @@
 var userChartData = []
 var chartTitle;
 var usersData;
+
+
+var userBarChart;
 function userEdit(button, ID) {
 
 
@@ -461,7 +464,7 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
-                initUserChart(data.data);
+                
 
             });
     } else {
@@ -472,11 +475,18 @@ function fetchData(page) {
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
                 usersData = data.data
-                initUserChart();
+                
             });
     }
 
 }
+
+
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return [`rgba(${r}, ${g}, ${b}, 0.5)`, `rgba(${r}, ${g}, ${b}, 1)`]; }
 
 function singleDelete(id) {
     $('#delete-modal-id').text(id);
@@ -519,68 +529,44 @@ function getGroups() {
 
 function initUserChart() {
 
-    userChartData = []
+    var dataSets = [];
 
-    switch (chartTitle) {
-        case 'گروه':
-            groups.forEach(function (g) {
-                const count = usersData.filter(user => user.group === g.groupName).length;
-                userChartData.push({ label: g.groupName, y: count })
-            })
+    usersData.forEach(d => {
+        const [bg, border] = getRandomColor()
+        dataSets.push({
+            label: d.label,
+            data: [d.count],
+            backgroundColor: bg,
+            borderColor: border,
+            borderWidth: 1
+        })
+    })
+    userBarChart.data.datasets = dataSets
+    userBarChart.data.lebels = [chartTitle]
+    userBarChart.update();
 
-            break;
-        case 'استان':
+}
 
-            const stateCount = {};
 
-            usersData.forEach(user => {
-                const state = user.state;
-                stateCount[state] = (stateCount[state] || 0) + 1;
+function fetchChartData() {
+
+    if (whileSreach) {
+        let input = $('#search-input').val();
+        fetch(`/user/get-chart-data?label=${chartTitle}&input=${input}`)
+            .then(response => response.json())
+            .then(data => {
+                usersData =  data.data
+
             });
-
-            userChartData = Object.keys(stateCount).map(state => {
-                return { label: state, y: stateCount[state] }; // Fixed the typo from "lebel" to "label"
+    } else {
+        fetch(`/user/get-chart-data?label=${chartTitle}&input=${''}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.data)
+                usersData = data.data
+                initUserChart()
             });
-
-            console.log(userChartData);
-
-            break;
-        case 'شهر':
-            const cityCount = {};
-
-            usersData.forEach(user => {
-                const city = user.city;
-                cityCount[city] = (cityCount[city] || 0) + 1;
-            });
-
-            userChartData = Object.keys(cityCount).map(city => {
-                return { label: city, y: cityCount[city] }; // Fixed the typo from "lebel" to "label"
-            });
-
-            console.log(userChartData);
-
-            break;
-        
-
     }
-
-    var options = {
-        title: {
-            text: ("نمودار " + chartTitle)
-        },
-        data: [
-            {
-                type: "column",
-                dataPoints: userChartData
-            }
-        ]
-    };
-
-    
-   
-
-    $("#user-chart").CanvasJSChart(options);
-
 }
 
 function DeleteSelectedUsers() {
@@ -658,12 +644,45 @@ function fillTable(data) {
 
 function handleChartSelectChange(select) {
     chartTitle = select.value
-     initUserChart()
+    fetchChartData()
 }
 
 $(document).ready(function () {
     getGroups();
     chartTitle = $('#chart-select').val();
+
+    userBarChart = new Chart($('#userBarChart')[0].getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['شهر'],
+            datasets: [{
+                label: 'تهران',
+                data: [6],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },{
+                label: 'قم',
+                data: [4],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },{
+                label: 'زنجان',
+                data: [5],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
     fetchData(currentPage);
 
