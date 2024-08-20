@@ -464,6 +464,7 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
+                fetchChartData()
                 
 
             });
@@ -474,7 +475,7 @@ function fetchData(page) {
                 
                 fillTable(data.data);
                 renderPagination(data.currentPage, data.totalPages);
-                usersData = data.data
+                fetchChartData()
                 
             });
     }
@@ -556,7 +557,9 @@ function fetchChartData() {
             .then(response => response.json())
             .then(data => {
                 usersData =  data.data
-
+                console.log(data.data)
+                usersData = data.data
+                initUserChart()
             });
     } else {
         fetch(`/user/get-chart-data?label=${chartTitle}&input=${''}`)
