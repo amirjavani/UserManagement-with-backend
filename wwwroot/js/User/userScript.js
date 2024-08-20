@@ -80,13 +80,13 @@ function userEdit(button, ID) {
 
         if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '' || birth === '') {
 
-            $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
-            $('.modal-error').eq(5).show();
+            $('.modal-error').eq(6).text('فیلدی نباید خالی باشد')
+            $('.modal-error').eq(6).show();
             return null;
         } if (group === '') {
 
-            $('.modal-error').eq(5).text('لطفا گروه را مشخص کنید!!')
-            $('.modal-error').eq(5).show();
+            $('.modal-error').eq(6).text('لطفا گروه را مشخص کنید')
+            $('.modal-error').eq(6).show();
             return null;
         }
         if (!perRegex.test(firstName)) {
@@ -134,12 +134,12 @@ function userEdit(button, ID) {
 
             CT = true;
         } if (!phoneRegex.test(phone)) {
-            $('.modal-error').eq(2).text('شماره تلفن نامعتبر!')
+            $('.modal-error').eq(2).text('شماره تلفن نامعتبر.')
             $('.modal-error').eq(2).show();
             PH = true;
 
         } if (!idRegex.test(id)) {
-            $('.modal-error').eq(5).text('کد پرسنلی باید 6 رقم باشد و با صفر شروع نشود.')
+            $('.modal-error').eq(5).text('کد پرسنلی باید شامل 6 رقم باشد و با صفر شروع نشود.')
             $('.modal-error').eq(5).show();
             IDv = true;
 
@@ -280,13 +280,13 @@ function addUser() {
 
         if (firstName === '' || lastName === '' || phone === '' || city === '' || state === '' || id === '' || birth === '') {
 
-            $('.modal-error').eq(5).text('فیلدی نباید خالی باشد!')
-            $('.modal-error').eq(5).show();
+            $('.modal-error').eq(7).text('فیلدی نباید خالی باشد.')
+            $('.modal-error').eq(7).show();
             return null;
         }if (group === '') {
 
-            $('.modal-error').eq(5).text('لطفا گروه را مشخص کنید!!')
-            $('.modal-error').eq(5).show();
+            $('.modal-error').eq(7).text('لطفا گروه را مشخص کنید.')
+            $('.modal-error').eq(7).show();
             return null;
         }
         if (!perRegex.test(firstName)) {
@@ -334,12 +334,12 @@ function addUser() {
 
             CT = true;
         } if (!phoneRegex.test(phone)) {
-            $('.modal-error').eq(2).text('شماره تلفن نامعتبر!')
+            $('.modal-error').eq(2).text('شماره تلفن نامعتبر.')
             $('.modal-error').eq(2).show();
             PH = true;
 
         } if (!idRegex.test(id)) {
-            $('.modal-error').eq(5).text('کد پرسنلی باید 6 رقم باشد و با صفر شروع نشود!')
+            $('.modal-error').eq(5).text('کد پرسنلی باید شامل 6 رقم باشد و با صفر شروع نشود.')
             $('.modal-error').eq(5).show();
             ID = true;
 
@@ -382,7 +382,7 @@ function addUser() {
 
             })
             .catch((error) => {
-                $('.modal-error').eq(5).text('کد پرسنلی تکراری است!!')
+                $('.modal-error').eq(5).text('کد پرسنلی تکراری است')
                 $('.modal-error').eq(5).show();  // Show the error message
             });
 
@@ -675,7 +675,22 @@ $(document).ready(function () {
             }
         }
     });
+
+
+
     
+    var pos = $('#user-page-navigation-buttons span').eq(0).position();
+
+    $('#navigation-dot').css('left', pos.left+10)
+    $('#navigation-dot').css('top', pos.top+30)
+
+
+
+    $('#user-page-navigation-buttons span').click(function () {
+        pos = $(this).position();
+        $('#navigation-dot').css('left', pos.left+10)
+        $('#navigation-dot').css('top', pos.top + 30)
+    })
 
     fetchData(currentPage);
 

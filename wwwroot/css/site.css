@@ -88,7 +88,7 @@ body {
 
 .table-container {
     overflow-x: auto;
-    padding: 20px 0px;
+    padding: 20px 0px 0px 0px;
 }
 
 table {
@@ -287,6 +287,16 @@ div.dt-container .dt-paging .dt-paging-button:hover{
     margin:auto;
     height: 370px;
     width: 60%;
+}
+
+#navigation-dot {
+    position: absolute;
+    top: 25px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #aaa;
+    transition: position 0.7s, left 0.7s;
 }
 
 @media (max-width:1024px) {
