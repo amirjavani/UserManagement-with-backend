@@ -3,9 +3,9 @@
 var userChartData = []
 var chartTitle;
 var usersData;
-
-
+var userChartShow = false;
 var userBarChart;
+
 function userEdit(button, ID) {
 
 
@@ -482,7 +482,6 @@ function fetchData(page) {
 
 }
 
-
 function getRandomColor() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -547,13 +546,12 @@ function initUserChart() {
 
     if (userBarChart) {
         userBarChart.data.datasets = dataSets
-        userBarChart.data.lebels = [chartTitle]
+        userBarChart.data.labels = [chartTitle]
         userBarChart.update();
     } else {
        
     }
 }
-
 
 function fetchChartData() {
 
@@ -651,6 +649,16 @@ function fillTable(data) {
 }
 
 
+function navigationDotPosition() {
+    if (!userChartShow) {
+        $('#navigation-dot').css('left', $('#table-button').position().left + 25)
+        $('#navigation-dot').css('top', $('#table-button').position().top + 37)
+    } else {
+        $('#navigation-dot').css('left', $('#chart-button').position().left + 27)
+        $('#navigation-dot').css('top', $('#chart-button').position().top + 37)
+    }
+}
+
 function handleChartSelectChange(select) {
     chartTitle = select.value
     fetchChartData()
@@ -664,7 +672,7 @@ $(document).ready(function () {
     userBarChart = new Chart(chr, {
         type: 'bar',
         data: {
-            labels: ['chartTitle'],
+            labels: [chartTitle],
             datasets: [{}]
         },
         options: {
@@ -679,20 +687,29 @@ $(document).ready(function () {
 
 
     
-    var pos = $('#user-page-navigation-buttons span').eq(0).position();
-
-    $('#navigation-dot').css('left', pos.left+10)
-    $('#navigation-dot').css('top', pos.top+30)
-
-
-
-    $('#user-page-navigation-buttons span').click(function () {
-        pos = $(this).position();
-        $('#navigation-dot').css('left', pos.left+10)
-        $('#navigation-dot').css('top', pos.top + 30)
+     
+    $('#table-button').click(function () {
+        userChartShow = false;
+        $('#chart').hide()
+        navigationDotPosition()
+        $('#data-table').fadeIn()
     })
+    $('#chart-button').click(function () {
+        userChartShow = true;
+        $('#data-table').hide()
+        navigationDotPosition()
+        $('#chart').fadeIn()
+    })
+   
 
     fetchData(currentPage);
+
+
+    $(window).resize(function () {
+        navigationDotPosition()
+    });
+    
+    $('#chart').hide()
 
     $('#user-birth-input').persianDatepicker({
         initialValue: false, 
@@ -763,4 +780,5 @@ $(document).ready(function () {
             
         
     })
+    navigationDotPosition()
 })

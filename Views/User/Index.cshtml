@@ -176,7 +176,7 @@
         <button href="#" class=" btn btn-close" data-dismiss="alert" aria-label="close"></button>
         جدول با موفقیت ذخیره شد !
     </div>
-    <div id="data-table" class="table-container font-IYregular " style="visibility:hidden;">
+    <div id="data-table" class="text-nowrap table-container font-IYregular " style="visibility:hidden;">
         <table>
             <thead class="font-IYbold">
                 <tr>
@@ -191,41 +191,49 @@
                     <th id="last-col" data-dt-order="disable"></th>
                 </tr>
             </thead>
-            <tbody class="font-IYnum">
+            <tbody class="font-IYnum ">
             </tbody>
         </table>
+
+        <div id="page-buttons" class="py-1 py-sm-2 d-flex flex-row justify-content-between ">
+            <div class=" d-flex flex-row gap-2">
+                <i id="prev" class="bi bi-chevron-right "></i>
+                <div id="pages" class="d-flex flex-row gap-1"></div>
+                <i id="next" class="bi bi-chevron-left  "></i>
+            </div>
+            <div id="download-submit-buttons">
+                <button class="btn btn-outline-success " onclick="downloadCSVfile()"> دانلود  <i class="bi bi-download"></i></button>
+            </div>
+        </div>
     </div>
-    <div id="page-buttons" class="py-1 py-sm-2 d-flex flex-row justify-content-between ">
-        <div class=" d-flex flex-row gap-2">
-            <i id="prev" class="bi bi-chevron-right "></i>
-            <div id="pages" class="d-flex flex-row gap-1"></div>
-            <i id="next" class="bi bi-chevron-left  "></i>
+    
+
+    <div id="chart">
+        <select id="chart-select" class="col-2 " onchange="handleChartSelectChange(this)">
+            <option value="گروه">گروه</option>
+            <option value="استان">استان</option>
+            <option value="شهر">شهر</option>
+        </select>
+
+        <div id="user-chart" class="mx-auto">
+            <canvas id="userBarChart"></canvas>
         </div>
-        <div id="download-submit-buttons">
-            <button class="btn btn-outline-success " onclick="downloadCSVfile()"> دانلود  <i class="bi bi-download"></i></button>
-        </div>
+
     </div>
 
     <hr />
 
-    <div id="user-page-navigation-buttons" class="d-flex flex-row justify-content-evenly position-relative">
+    <div id="user-page-navigation-buttons" class=" d-flex flex-row justify-content-evenly position-relative">
         <div id="navigation-dot"></div>
-        <span>جدول</span>
-        <span>نمودار</span>
+        <span id="table-button">جدول</span>
+        <div class="vr"></div>
+        <span id="chart-button">نمودار</span>
     </div>
 
-    <select id="chart-select" class="col-2 " onchange="handleChartSelectChange(this)" >
-        <option value="گروه">گروه</option>
-        <option value="استان">استان</option>
-        <option value="شهر">شهر</option>
-    </select>
-
+    <hr />
 
     
-    
-    <div id="user-chart">
-        <canvas id="userBarChart"></canvas>
-    </div>  
+ 
 
 </div>
 
