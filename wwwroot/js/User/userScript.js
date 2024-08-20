@@ -542,10 +542,16 @@ function initUserChart() {
             borderWidth: 1
         })
     })
-    userBarChart.data.datasets = dataSets
-    userBarChart.data.lebels = [chartTitle]
-    userBarChart.update();
+    
 
+
+    if (userBarChart) {
+        userBarChart.data.datasets = dataSets
+        userBarChart.data.lebels = [chartTitle]
+        userBarChart.update();
+    } else {
+       
+    }
 }
 
 
@@ -654,29 +660,12 @@ $(document).ready(function () {
     getGroups();
     chartTitle = $('#chart-select').val();
 
-    userBarChart = new Chart($('#userBarChart')[0].getContext('2d'), {
+    const chr = $('#userBarChart')[0].getContext('2d');
+    userBarChart = new Chart(chr, {
         type: 'bar',
         data: {
-            labels: ['شهر'],
-            datasets: [{
-                label: 'تهران',
-                data: [6],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            },{
-                label: 'قم',
-                data: [4],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            },{
-                label: 'زنجان',
-                data: [5],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
+            labels: ['chartTitle'],
+            datasets: [{}]
         },
         options: {
             scales: {
@@ -686,6 +675,7 @@ $(document).ready(function () {
             }
         }
     });
+    
 
     fetchData(currentPage);
 

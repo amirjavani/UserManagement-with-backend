@@ -101,7 +101,7 @@ namespace UserManagement.Controllers
 
             var totalUsers = ReadUsersFromFile();
 
-
+            
             List<User> users = [];
 
             if (input!=null)
@@ -121,22 +121,59 @@ namespace UserManagement.Controllers
                 case "گروه":
 
 
+                    var groupCount = new Dictionary<string, int>();
 
+                    foreach (var user in users)
+                    {
+                        if (groupCount.ContainsKey(user.Group))
+                        {
+                            groupCount[user.Group]++;
+                        }
+                        else
+                        {
+                            groupCount[user.Group] = 1;
+                        }
+                    }
+
+                     var userChartData = groupCount.Select(group => new
+                    {
+                        label = group.Key,
+                        count = group.Value
+                    }).ToList();
 
 
                     return Ok(new
                     {
-                        Massage= "group"
+                        Data = userChartData
                     });
                 case "استان":
+
+                    var stateCount = new Dictionary<string, int>();
+
+                    foreach (var user in users)
+                    {
+                        if (stateCount.ContainsKey(user.State))
+                        {
+                            stateCount[user.State]++;
+                        }
+                        else
+                        {
+                            stateCount[user.State] = 1;
+                        }
+                    }
+
+                    userChartData = stateCount.Select(state => new
+                    {
+                        label = state.Key,
+                        count = state.Value
+                    }).ToList();
+
+
                     return Ok(new
                     {
-                        Massage = "state"
-
-                    }); 
+                        Data = userChartData
+                    });
                 case "شهر":
-
-
 
                     var cityCount = new Dictionary<string, int>();
 
@@ -152,8 +189,7 @@ namespace UserManagement.Controllers
                         }
                     }
 
-                    // Prepare data for the chart
-                    var userChartData = cityCount.Select(city => new
+                     userChartData = cityCount.Select(city => new
                     {
                         label = city.Key,
                         count = city.Value
@@ -163,9 +199,8 @@ namespace UserManagement.Controllers
                     return Ok(new
                     {
                         Data = userChartData
-                    }); ;
-                    
-                
+                    });
+                 
             }
 
             return Conflict();

@@ -206,13 +206,13 @@
         <button class="btn btn-outline-success " onclick="downloadCSVfile()"> دانلود  <i class="bi bi-download"></i></button>
     </div>
 
-    <select id="chart-select" class="col-2 mx-auto" onchange="handleChartSelectChange(this)" >
+    <select id="chart-select" class="col-2 " onchange="handleChartSelectChange(this)" >
         <option value="گروه">گروه</option>
         <option value="استان">استان</option>
         <option value="شهر">شهر</option>
     </select>
 
-    <div id="user-chart style="width: 50%; margin: auto;">
+    <div id="user-chart">
         <canvas id="userBarChart"></canvas>
     </div>  
 

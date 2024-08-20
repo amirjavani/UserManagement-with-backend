@@ -284,6 +284,7 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 
 
 #user-chart {
+    margin:auto;
     height: 370px;
     width: 60%;
 }
@@ -342,6 +343,9 @@ div.dt-container .dt-paging .dt-paging-button:hover{
 
     #page-buttons {
         font-size: 16px;
+    }
+    #user-chart {
+        width: 80%;
     }
     
 }
